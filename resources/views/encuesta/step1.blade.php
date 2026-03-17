@@ -2,7 +2,7 @@
 <div data-step="1" x-show="step === 1" class="px-6">
     <div class="mb-12">
         <h2 class="text-2xl align-middle font-semibold text-vinoClaro dark:text-gray-100 text-center mt-6 break-normal">
-            DATOS de la C.C.T.</h2>
+            DATOS C.C.T.</h2>
     </div>
     <!-- Cards aquí -->
     <div class="mt-4 flex flex-col md:flex-row items-start md:space-x-4 space-y-4 md:space-y-0">
