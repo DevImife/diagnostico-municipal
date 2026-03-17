@@ -123,7 +123,7 @@ Sistema en desarrollo / producción (ajustar)
 
 ## 👨‍💻 Desarrollado por
 
-Área de Sistemas  
-Nombre del desarrollador: (tu nombre)
+Unidad de Tecnologías de la Información  
+Nombre del desarrollador: Sergio Ramirez A
 
 ---
