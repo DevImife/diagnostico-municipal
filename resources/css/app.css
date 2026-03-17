@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+
+/* Input principal (transparente, sin bordes) */
+.ts-control {
+  @apply bg-transparent border-0 shadow-none p-0 focus:ring-0 focus:outline-none;
+}
+
+/* Texto dentro del input */
+.ts-control input {
+  @apply bg-transparent text-gray-900 dark:text-gray-900 placeholder-gray-400;
+}
+
+/* Dropdown (lista de resultados) */
+.ts-dropdown {
+  @apply bg-white dark:bg-gray-800 border border-gray-300 rounded-lg shadow-lg;
+}
+
+/* Opciones dentro del dropdown */
+.ts-dropdown .option {
+  @apply px-3 py-2 text-sm text-gray-800 dark:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer;
+}
+
+/* Opción seleccionada */
+.ts-control .item {
+  @apply px-2 py-1 text-sm bg-vino text-white rounded-md;
+}
+
+[type='radio']:checked,
+[type='checkbox']:checked {
+  background-color: #56212f !important;
+  accent-color: #56212f !important;
+}
+
+input[type='radio']:focus,
+input[type='checkbox']:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px #EBCBD4;
+  /* halo rosa clarito */
+}
