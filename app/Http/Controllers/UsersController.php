@@ -33,6 +33,7 @@ class UsersController extends Controller
         // $usuarios = User::all();
         $usuarios = User::with(['rol', 'municipio'])
             ->where('status', 1)
+            ->where('id_rol', '!=', 1)
             ->paginate(10);
 
         return view('usuarios', compact('roles', 'municipios', 'usuarios'));

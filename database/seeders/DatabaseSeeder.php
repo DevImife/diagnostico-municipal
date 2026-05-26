@@ -16,14 +16,14 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Dev',
+            'email' => 'sergio.ramirez.imife@edugem.gob.mx',
         ]);
 
         // Llamar al seeder de Levels
-        $this->call(LevelSeeder::class);
-        $this->call(ShiftSeeder::class);
-        $this->call(MunicipalitiesSeeder::class);
-        $this->call(RolSeeder::class);
+        // $this->call(LevelSeeder::class);
+        // $this->call(ShiftSeeder::class);
+        // $this->call(MunicipalitiesSeeder::class);
+        // $this->call(RolSeeder::class);
     }
 }

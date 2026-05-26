@@ -28,6 +28,8 @@
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.css" rel="stylesheet">
     {{-- maps --}}
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="/js/encuesta/encuesta-media.js"></script>
+    <script src="/js/encuesta/encuesta-step-handlers.js"></script>
     <script src="/js/encuesta.js"></script>
     <style>
         #map {
