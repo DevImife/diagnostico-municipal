@@ -13,12 +13,12 @@
                 <div>
                     <p class="font-semibold text-vino">Vialidad Primaria</p>
                     <ul class="list-disc list-inside ml-2 space-y-1">
-                        <li>
-                            <span class="font-medium">Zona Urbana:</span>
+                        <li class="dark:text-white">
+                            <span class="font-medium dark:text-white">Zona Urbana:</span>
                             Avenidas rápidas, sin acceso directo a zonas habitacionales.
                         </li>
-                        <li>
-                            <span class="font-medium">Zona Rural:</span>
+                        <li class="dark:text-white">
+                            <span class="font-medium dark:text-white">Zona Rural:</span>
                             Autopistas y carreteras pavimentadas de 2 a 6 carriles,
                             con conexión interestatal o intermunicipal.
                         </li>
@@ -30,13 +30,13 @@
                 <div>
                     <p class="font-semibold text-vino">Vialidad Secundaria</p>
                     <ul class="list-disc list-inside ml-2 space-y-1">
-                        <li>
-                            <span class="font-medium">Zona Urbana:</span>
+                        <li class="dark:text-white">
+                            <span class="font-medium dark:text-white">Zona Urbana:</span>
                             Calles con tránsito vehicular lento, que dan acceso
                             a colonias o zonas habitacionales.
                         </li>
-                        <li>
-                            <span class="font-medium">Zona Rural:</span>
+                        <li class="dark:text-white">
+                            <span class="font-medium dark:text-white">Zona Rural:</span>
                             Carreteras pavimentadas o revestidas de conexión municipal,
                             con velocidad aproximada entre 30 y 60 km/h.
                         </li>
@@ -48,13 +48,13 @@
                 <div>
                     <p class="font-semibold text-vino">Vialidad Terciaria</p>
                     <ul class="list-disc list-inside ml-2 space-y-1">
-                        <li>
-                            <span class="font-medium">Zona Urbana:</span>
+                        <li class="dark:text-white">
+                            <span class="font-medium dark:text-white">Zona Urbana:</span>
                             Calles de baja velocidad dentro de colonias, con acceso
                             a estacionamientos colectivos, viviendas y comercio básico.
                         </li>
-                        <li>
-                            <span class="font-medium">Zona Rural:</span>
+                        <li class="dark:text-white">
+                            <span class="font-medium dark:text-white">Zona Rural:</span>
                             Caminos revestidos o de terracería para conexión municipal.
                         </li>
                     </ul>

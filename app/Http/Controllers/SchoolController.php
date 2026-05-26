@@ -537,7 +537,10 @@ class SchoolController extends Controller
     {
 
         $request->validate([
-            'files.*' => 'required|file|mimes:pdf,jpg,jpeg,png|max:15360',
+            'token' => 'required|string',
+            'step' => 'required',
+            'files' => 'required|array|min:1',
+            'files.*' => 'required|file|mimes:pdf,jpg,jpeg,jfif,png,webp,heic,heif,avif,bmp,gif|max:15360',
         ]);
 
         $token = $request->token;
