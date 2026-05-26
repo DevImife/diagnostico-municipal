@@ -137,7 +137,7 @@
 
                 </div>
                 <div class="mt-4">
-                  {{ $usuarios->links() }}
+                    {{ $usuarios->links() }}
                 </div>
 
             </div>
