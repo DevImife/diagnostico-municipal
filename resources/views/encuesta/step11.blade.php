@@ -9,7 +9,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 mt-9 border border-transparent dark:border-gray-600">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -46,7 +46,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 mt-9 border border-transparent dark:border-gray-600">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -55,29 +55,31 @@
                     </svg>
                 </div>
             </div>
-           <div class="mt-4">
-              <label for="otros" 
-                    class="text-lg font-semibold text-gray-900 dark:text-white mb-4 break-words">
-                  ¿Sabías que el proceso de baja de bienes inservibles puedes generarlo en todas sus etapas a través del correo electrónico:
-                  <span class="font-medium text-blue-700 break-all">limpiatuescuela@edugem.gob.mx</span>?
-              </label>
+            <div class="mt-4">
+                <label for="otros" class="text-lg font-semibold text-gray-900 dark:text-white mb-4 break-words">
+                    ¿Sabías que el proceso de baja de bienes inservibles puedes generarlo en todas sus etapas a través
+                    del correo electrónico:
+                    <span class="font-medium text-blue-700 break-all">limpiatuescuela@edugem.gob.mx</span>?
+                </label>
 
-              <div>
-                  <input type="radio" id="bajadebienes_si" name="bajadebienes" value="si" class="accent-vino" x-model="bienesInservibles.correo"/>
-                  <label for="bajadebienes_si" class="py-2 px-2 text-left">Sí</label>
-              </div>
-              <div>
-                  <input type="radio" id="bajadebienes_no" name="bajadebienes" value="no" class="accent-vino" x-model="bienesInservibles.correo"/>
-                  <label for="bajadebienes_no" class="py-2 px-2 text-left">No</label>
-              </div>
-          </div>
+                <div>
+                    <input type="radio" id="bajadebienes_si" name="bajadebienes" value="si" class="accent-vino"
+                        x-model="bienesInservibles.correo" />
+                    <label for="bajadebienes_si" class="py-2 px-2 text-left">Sí</label>
+                </div>
+                <div>
+                    <input type="radio" id="bajadebienes_no" name="bajadebienes" value="no" class="accent-vino"
+                        x-model="bienesInservibles.correo" />
+                    <label for="bajadebienes_no" class="py-2 px-2 text-left">No</label>
+                </div>
+            </div>
         </div>
         {{-- card 3 --}}
         <div
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 mt-9 border border-transparent dark:border-gray-600">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -97,12 +99,14 @@
                     estado regular que no utilices puedes transferirlo a otra Institución Educativa que le sea de
                     utilidad?</label>
                 <div>
-                    <input type="radio" id="mobiliario" name="mobiliario" value="si" class="accent-vino" x-model="bienesInservibles.tansferencia"/>
+                    <input type="radio" id="mobiliario" name="mobiliario" value="si" class="accent-vino"
+                        x-model="bienesInservibles.tansferencia" />
                     <label class="py-2 px-2 text-left">Si</label>
                 </div>
                 <div>
 
-                    <input type="radio" id="mobiliario" name="mobiliario" value="no" class="accent-vino" x-model="bienesInservibles.tansferencia"/>
+                    <input type="radio" id="mobiliario" name="mobiliario" value="no" class="accent-vino"
+                        x-model="bienesInservibles.tansferencia" />
                     <label class="py-2 px-2 text-left">No</label>
                 </div>
             </div>
@@ -112,7 +116,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 mt-9 border border-transparent dark:border-gray-600">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -131,12 +135,14 @@
                     el Área de Bienes Patrimoniales puedes solicitar el alta de bienes,
                     la re impresión de tus tarjetas de resguardo y su actualización?</label>
                 <div>
-                    <input type="radio" id="resguardo_si" name="resguardo" value="si" class="accent-vino" x-model="bienesInservibles.reImpresion"/>
+                    <input type="radio" id="resguardo_si" name="resguardo" value="si" class="accent-vino"
+                        x-model="bienesInservibles.reImpresion" />
                     <label class="py-2 px-2 text-left">Si</label>
                 </div>
                 <div>
 
-                    <input type="radio" id="resguardo_no" name="resguardo" value="no" class="accent-vino" x-model="bienesInservibles.reImpresion"/>
+                    <input type="radio" id="resguardo_no" name="resguardo" value="no" class="accent-vino"
+                        x-model="bienesInservibles.reImpresion" />
                     <label class="py-2 px-2 text-left">No</label>
                 </div>
             </div>
@@ -146,7 +152,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 mt-9 border border-transparent dark:border-gray-600">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -170,7 +176,7 @@
                 </div>
                 <div>
                     <input type="radio" id="robo_siniestro_no" name="robo_siniestro" value="no"
-                        class="accent-vino"  x-model="bienesInservibles.bajaBienes"/>
+                        class="accent-vino" x-model="bienesInservibles.bajaBienes" />
                     <label class="py-2 px-2 text-left">No</label>
                 </div>
             </div>
@@ -180,7 +186,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 mt-9 border border-transparent dark:border-gray-600">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -202,12 +208,12 @@
                 </label>
                 <div>
                     <input type="radio" id="evento_siniestro_si" name="evento_siniestro" value="si"
-                        class="accent-vino" x-model="bienesInservibles.eventoSiniestro"/>
+                        class="accent-vino" x-model="bienesInservibles.eventoSiniestro" />
                     <label class="py-2 px-2 text-left">Si</label>
                 </div>
                 <div>
                     <input type="radio" id="evento_siniestro_no" name="evento_siniestro" value="no"
-                        class="accent-vino" x-model="bienesInservibles.eventoSiniestro"/>
+                        class="accent-vino" x-model="bienesInservibles.eventoSiniestro" />
                     <label class="py-2 px-2 text-left">No</label>
                 </div>
             </div>
@@ -217,7 +223,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 mt-9 border border-transparent dark:border-gray-600">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -232,13 +238,13 @@
                 </label>
                 <div>
                     <input type="radio" id="bien_extraviado_si" name="bien_extraviado" value="si"
-                        class="accent-vino" x-model="bienesInservibles.extravio"/>
+                        class="accent-vino" x-model="bienesInservibles.extravio" />
                     <label class="py-2 px-2 text-left">Si</label>
                 </div>
                 <div>
 
                     <input type="radio" id="bien_extraviado_no" name="bien_extraviado"
-                        value="no"class="accent-vino" x-model="bienesInservibles.extravio"/>
+                        value="no"class="accent-vino" x-model="bienesInservibles.extravio" />
                     <label class="py-2 px-2 text-left">No</label>
                 </div>
             </div>

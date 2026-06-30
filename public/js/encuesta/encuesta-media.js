@@ -17,10 +17,17 @@
     return path ? `/storage/${path}` : null;
   }
 
+  function pathBasename(path) {
+    return path ? String(path).split("/").pop() : null;
+  }
+
   function previewObject(path, extra = {}) {
     if (!path) return null;
 
     return {
+      path,
+      name: pathBasename(path),
+      file: { name: pathBasename(path) },
       preview: storageUrl(path),
       existing: true,
       ...extra,
@@ -35,7 +42,15 @@
   }
 
   function previewUrls(paths = []) {
-    return (paths || []).filter(Boolean).map((path) => storageUrl(path));
+    return (paths || [])
+      .map((item) => {
+        if (!item) return null;
+        if (typeof item === "string") return storageUrl(item);
+        if (item.preview) return item.preview;
+        if (item.path) return storageUrl(item.path);
+        return null;
+      })
+      .filter(Boolean);
   }
 
   function normalizeFiles(value) {
@@ -60,6 +75,29 @@
     return files.filter((file) => !ALLOWED_EXTENSIONS.has(getFileExtension(file)));
   }
 
+  function extractExistingPaths(value, fallback = []) {
+    const items = Array.isArray(value) ? value : [value];
+    const paths = items
+      .map((item) => {
+        if (!item) return null;
+        if (typeof item === "string") return item;
+        if (item.existing && item.path) return item.path;
+        if (item.path) return item.path;
+        return null;
+      })
+      .filter(Boolean);
+
+    if (paths.length > 0) {
+      return paths;
+    }
+
+    return Array.isArray(fallback)
+      ? fallback.filter(Boolean)
+      : fallback
+        ? [fallback]
+        : [];
+  }
+
   function assertAllowedFiles(files = []) {
     const invalidFiles = getInvalidFiles(files);
 
@@ -75,10 +113,11 @@
   }
 
   async function uploadNewFiles(context, step, value, existingPaths = []) {
+    const keptPaths = extractExistingPaths(value, existingPaths);
     const newFiles = normalizeFiles(value);
 
     if (newFiles.length === 0) {
-      return [...existingPaths];
+      return [...keptPaths];
     }
 
     assertAllowedFiles(newFiles);
@@ -86,22 +125,27 @@
     const subida = await context.subirArchivosTemp(step, newFiles);
 
     return [
-      ...existingPaths,
+      ...keptPaths,
       ...(subida?.paths || []),
     ];
   }
 
   async function uploadSingleFile(context, step, value, existingPath = null) {
+    if (value === null) {
+      return null;
+    }
+
+    const [keptPath] = extractExistingPaths(value, existingPath ? [existingPath] : []);
     const [file] = normalizeFiles(value);
 
     if (!file) {
-      return existingPath;
+      return keptPath || null;
     }
 
     assertAllowedFiles([file]);
 
     const subida = await context.subirArchivosTemp(step, [file]);
-    return subida?.paths?.[0] || existingPath;
+    return subida?.paths?.[0] || keptPath || null;
   }
 
   function createDatosExtraEdificio() {
@@ -212,6 +256,7 @@
     assertAllowedFiles,
     applyObraExteriorPreviewState,
     createDatosExtraEdificio,
+    extractExistingPaths,
     getFileExtension,
     getInvalidFiles,
     getServiciosFileMap,

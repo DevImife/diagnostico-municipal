@@ -54,6 +54,7 @@ class Survey extends Model
         'servSanitarioEstado' => 'array',
         'tipoDescarga' => 'array',
         'edifEspaciosCantidad' => 'array',
+        'edifTipoEstructura' => 'array',
         'edifCondiciones' => 'array',
         'obraExteriorEstado' => 'array',
         'obraExteriorComplementos' => 'array',
