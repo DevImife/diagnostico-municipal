@@ -13,6 +13,14 @@
 // localStorage.removeItem("encuesta_step_9");
 
 
+function generarUUID() {
+  if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+    return window.crypto.randomUUID();
+  }
+
+  return 'id-' + Date.now() + '-' + Math.random().toString(36).substring(2, 10);
+}
+
 function formularioEncuesta() {
   const grupos = ["alumnas", "alumnos", "maestras", "maestros", "discapacidad_alumno", "discapacidad_alumna"];
   const media = window.EncuestaMedia || {};
@@ -118,8 +126,13 @@ function formularioEncuesta() {
     "\u00c1rea Deportiva": ["Área Deportiva", "Ãrea Deportiva", "ÃƒÂrea Deportiva", "ÃƒÆ’Ã‚Ârea Deportiva"],
   };
 
+  // if (!token) {
+  //   token = crypto.randomUUID();
+  //   localStorage.setItem('form_token', token);
+  // }
+
   if (!token) {
-    token = crypto.randomUUID();
+    token = generarUUID();
     localStorage.setItem('form_token', token);
   }
 
