@@ -71,7 +71,7 @@
             <!-- Icono centrado arriba -->
 
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -109,7 +109,7 @@
             <!-- Icono centrado arriba -->
 
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -147,23 +147,7 @@
 
                     <input type="file" id="fotosacceso" name="fotosacceso" accept="image/*" class="hidden"
                         multiple
-                        @change="
-
-                                const files = Array.from($event.target.files);
-
-                                if (files.length > 5) {
-                                    notyf.error('Solo puedes subir máximo 5 imágenes');
-                                    $event.target.value = '';
-                                    return;
-                                }
-                                vialidadImagen= [];
-                                servicios.archivo_vialidad =[];
-
-                                files.forEach(file => {
-                                    vialidadImagen.push(URL.createObjectURL(file));
-                                    servicios.archivo_vialidad.push(file);
-                                });
-                            " />
+                        @change="agregarImagenesServicio('archivo_vialidad', 'vialidadImagen', $event.target.files); $event.target.value = ''" />
 
                     <!-- Nombre del archivo -->
                     <p x-text="nombreImagenAcceso" class="mt-2 text-sm text-gray-500 dark:text-gray-300 truncate">
@@ -175,18 +159,16 @@
                             class="mt-2 w-48 h-48 object-cover rounded-lg border border-gray-300 dark:border-gray-600" />
                     </template> --}}
 
-                    <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4" x-show="vialidadImagen.length > 0">
-                        <template x-for="(img, index) in vialidadImagen" :key="index">
+                    <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4"
+                        x-show="servicios.archivo_vialidad.length > 0">
+                        <template x-for="(img, index) in servicios.archivo_vialidad" :key="index">
                             <div class="relative group">
-                                <img :src="img"
+                                <img :src="obtenerSrcGaleria(img)"
                                     class="w-full h-32 object-cover rounded-lg border border-gray-300 dark:border-gray-600" />
 
                                 <!-- Botón eliminar -->
                                 <button type="button"
-                                    @click="
-                                    vialidadImagen.splice(index, 1);
-                                    servicios.archivo_vialidad.splice(index, 1);
-                                    "
+                                    @click="eliminarImagenServicio('archivo_vialidad', 'vialidadImagen', index)"
                                     class="absolute top-2 right-2 bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition"
                                     title="Eliminar imagen">
                                     ✕
@@ -264,7 +246,7 @@
         <div
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 mt-6">
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -296,7 +278,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 mt-6">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -332,41 +314,23 @@
                     <!-- Input real oculto -->
                     <input type="file" id="fotosdeagua" name="fotosdeagua" accept="image/*" class="hidden"
                         multiple
-                        @change="
-                                const files = Array.from($event.target.files);
-
-                                if (files.length > 5) {
-                                    notyf.error('Solo puedes subir máximo 5 imágenes');
-                                    $event.target.value = '';
-                                    return;
-                                }
-
-                                sistemaAguaImagen = [];
-                                servicios.fotografia_agua_potable = [];
-
-                                files.forEach(file => {
-                                    sistemaAguaImagen.push(URL.createObjectURL(file));
-                                    servicios.fotografia_agua_potable.push(file);
-                                });
-                            " />
+                        @change="agregarImagenesServicio('fotografia_agua_potable', 'sistemaAguaImagen', $event.target.files); $event.target.value = ''" />
 
                     <!-- Nombre del archivo -->
                     <p x-text="nombreImagenAgua" class="mt-2 text-sm text-gray-500 dark:text-gray-300 truncate">
                     </p>
 
                     <!-- Vista previa -->
-                    <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4" x-show="sistemaAguaImagen.length > 0">
-                        <template x-for="(img, index) in sistemaAguaImagen" :key="index">
+                    <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4"
+                        x-show="servicios.fotografia_agua_potable.length > 0">
+                        <template x-for="(img, index) in servicios.fotografia_agua_potable" :key="index">
                             <div class="relative group">
-                                <img :src="img"
+                                <img :src="obtenerSrcGaleria(img)"
                                     class="w-full h-32 object-cover rounded-lg border border-gray-300 dark:border-gray-600" />
 
                                 <!-- Botón eliminar -->
                                 <button type="button"
-                                    @click="
-                                    sistemaAguaImagen.splice(index, 1);
-                                    servicios.fotografia_agua_potable.splice(index, 1);
-                                    "
+                                    @click="eliminarImagenServicio('fotografia_agua_potable', 'sistemaAguaImagen', index)"
                                     class="absolute top-2 right-2 bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition"
                                     title="Eliminar imagen">
                                     ✕
@@ -382,7 +346,7 @@
         <div
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 mt-6">
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -413,7 +377,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 mt-6">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -449,41 +413,22 @@
                     <!-- Input real oculto -->
                     <input type="file" id="drenaje_imagen" name="drenaje_imagen" accept="image/*" class="hidden"
                         multiple
-                        @change="
-
-                                const files = Array.from($event.target.files);
-
-                                if (files.length > 5) {
-                                    notyf.error('Solo puedes subir máximo 5 imágenes');
-                                    $event.target.value = '';
-                                    return;
-                                }
-
-                                sistemaDrenajeImagen = [];
-                                servicios.fotografia_drenaje = [];
-
-                                files.forEach(file => {
-                                    sistemaDrenajeImagen.push(URL.createObjectURL(file));
-                                    servicios.fotografia_drenaje.push(file);
-                                });
-                            " />
+                        @change="agregarImagenesServicio('fotografia_drenaje', 'sistemaDrenajeImagen', $event.target.files); $event.target.value = ''" />
 
                     <!-- Nombre del archivo -->
                     <p x-text="nombreImagenDrenaje" class="mt-2 text-sm text-gray-500 dark:text-gray-300 truncate">
                     </p>
                     <!-- Vista previa -->
-                    <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4" x-show="sistemaDrenajeImagen.length > 0">
-                        <template x-for="(img, index) in sistemaDrenajeImagen" :key="index">
+                    <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4"
+                        x-show="servicios.fotografia_drenaje.length > 0">
+                        <template x-for="(img, index) in servicios.fotografia_drenaje" :key="index">
                             <div class="relative group">
-                                <img :src="img"
+                                <img :src="obtenerSrcGaleria(img)"
                                     class="w-full h-32 object-cover rounded-lg border border-gray-300 dark:border-gray-600" />
 
                                 <!-- Botón eliminar -->
                                 <button type="button"
-                                    @click="
-                                    sistemaDrenajeImagen.splice(index, 1);
-                                    servicios.fotografia_drenaje.splice(index, 1);
-                                    "
+                                    @click="eliminarImagenServicio('fotografia_drenaje', 'sistemaDrenajeImagen', index)"
                                     class="absolute top-2 right-2 bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition"
                                     title="Eliminar imagen">
                                     ✕
@@ -498,7 +443,7 @@
         <div
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 mt-6">
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -529,7 +474,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 mt-6">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -563,43 +508,23 @@
                     <!-- Input real oculto -->
                     <input type="file" id="foto_energia_electrica" name="foto_energia_electrica" accept="image/*"
                         multiple class="hidden"
-                        @change="
-
-                                const files = Array.from($event.target.files);
-
-                                if (files.length > 5) {
-                                    notyf.error('Solo puedes subir máximo 5 imágenes');
-                                    $event.target.value = '';
-                                    return;
-                                }
-
-                                sistemaEnergiaImagen = [];
-                                servicios.fotografia_energia = [];
-
-                                files.forEach(file => {
-                                    sistemaEnergiaImagen.push(URL.createObjectURL(file));
-                                    servicios.fotografia_energia.push(file);
-                                });
-                                
-                            " />
+                        @change="agregarImagenesServicio('fotografia_energia', 'sistemaEnergiaImagen', $event.target.files); $event.target.value = ''" />
 
                     <!-- Nombre del archivo -->
                     <p x-text="nombreImagenEnergia" class="mt-2 text-sm text-gray-500 dark:text-gray-300 truncate">
                     </p>
 
                     <!-- Vista previa -->
-                    <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4" x-show="sistemaEnergiaImagen.length > 0">
-                        <template x-for="(img, index) in sistemaEnergiaImagen" :key="index">
+                    <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4"
+                        x-show="servicios.fotografia_energia.length > 0">
+                        <template x-for="(img, index) in servicios.fotografia_energia" :key="index">
                             <div class="relative group">
-                                <img :src="img"
+                                <img :src="obtenerSrcGaleria(img)"
                                     class="w-full h-32 object-cover rounded-lg border border-gray-300 dark:border-gray-600" />
 
                                 <!-- Botón eliminar -->
                                 <button type="button"
-                                    @click="
-                                  sistemaEnergiaImagen.splice(index, 1);
-                                  servicios.fotografia_energia.splice(index, 1);
-                                  "
+                                    @click="eliminarImagenServicio('fotografia_energia', 'sistemaEnergiaImagen', index)"
                                     class="absolute top-2 right-2 bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition"
                                     title="Eliminar imagen">
                                     ✕
@@ -661,7 +586,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 mt-6">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -700,41 +625,23 @@
                     <!-- Input real oculto -->
                     <input type="file" id="fotosinstalaciones" name="fotosinstalaciones" accept="image/*"
                         multiple class="hidden"
-                        @change="
-                                const files = Array.from($event.target.files);
-
-                                if (files.length > 5) {
-                                    notyf.error('Solo puedes subir máximo 5 imágenes');
-                                    $event.target.value = '';
-                                    return;
-                                }
-
-                                sistemaEspecialImagen = [];
-                                servicios.fotografia_especiales = [];
-
-                                files.forEach(file => {
-                                    sistemaEspecialImagen.push(URL.createObjectURL(file));
-                                    servicios.fotografia_especiales.push(file);
-                                });
-                            " />
+                        @change="agregarImagenesServicio('fotografia_especiales', 'sistemaEspecialImagen', $event.target.files); $event.target.value = ''" />
 
                     <!-- Nombre del archivo -->
                     <p x-text="nombreImagenEspeciales" class="mt-2 text-sm text-gray-500 dark:text-gray-300 truncate">
                     </p>
 
                     <!-- Vista previa -->
-                    <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4" x-show="sistemaEspecialImagen.length > 0">
-                        <template x-for="(img, index) in sistemaEspecialImagen" :key="index">
+                    <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4"
+                        x-show="servicios.fotografia_especiales.length > 0">
+                        <template x-for="(img, index) in servicios.fotografia_especiales" :key="index">
                             <div class="relative group">
-                                <img :src="img"
+                                <img :src="obtenerSrcGaleria(img)"
                                     class="w-full h-32 object-cover rounded-lg border border-gray-300 dark:border-gray-600" />
 
                                 <!-- Botón eliminar -->
                                 <button type="button"
-                                    @click="
-                                    sistemaEspecialImagen.splice(index, 1);
-                                    servicios.fotografia_especiales.splice(index, 1);
-                                    "
+                                    @click="eliminarImagenServicio('fotografia_especiales', 'sistemaEspecialImagen', index)"
                                     class="absolute top-2 right-2 bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition"
                                     title="Eliminar imagen">
                                     ✕
@@ -807,7 +714,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 mt-6">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -868,18 +775,15 @@
 
                     <!-- Vista previa -->
                     <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4"
-                        x-show="sistemaTecnologiasImagen.length > 0">
-                        <template x-for="(img, index) in sistemaTecnologiasImagen" :key="index">
+                        x-show="servicios.fotografia_tecnologias.length > 0">
+                        <template x-for="(img, index) in servicios.fotografia_tecnologias" :key="index">
                             <div class="relative group">
-                                <img :src="img"
+                                <img :src="obtenerSrcGaleria(img)"
                                     class="w-full h-32 object-cover rounded-lg border border-gray-300 dark:border-gray-600" />
 
                                 <!-- Botón eliminar -->
                                 <button type="button"
-                                    @click="
-                                    sistemaTecnologiasImagen.splice(index, 1);
-                                    servicios.fotografia_tecnologias.splice(index, 1);
-                                    "
+                                    @click="eliminarImagenServicio('fotografia_tecnologias', 'sistemaTecnologiasImagen', index)"
                                     class="absolute top-2 right-2 bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition"
                                     title="Eliminar imagen">
                                     ✕
@@ -895,7 +799,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 mt-6">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -934,7 +838,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 mt-6">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -974,7 +878,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 mt-6">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -1035,18 +939,15 @@
 
                     <!-- Vista previa -->
                     <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4"
-                        x-show="sistemaAccesibilidadImagen.length > 0">
-                        <template x-for="(img, index) in sistemaAccesibilidadImagen" :key="index">
+                        x-show="servicios.fotografias_accesibilidad.length > 0">
+                        <template x-for="(img, index) in servicios.fotografias_accesibilidad" :key="index">
                             <div class="relative group">
-                                <img :src="img"
+                                <img :src="obtenerSrcGaleria(img)"
                                     class="w-full h-32 object-cover rounded-lg border border-gray-300 dark:border-gray-600" />
 
                                 <!-- Botón eliminar -->
                                 <button type="button"
-                                    @click="
-                                    sistemaAccesibilidadImagen.splice(index, 1);
-                                    servicios.fotografias_accesibilidad.splice(index, 1);
-                                    "
+                                    @click="eliminarImagenServicio('fotografias_accesibilidad', 'sistemaAccesibilidadImagen', index)"
                                     class="absolute top-2 right-2 bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition"
                                     title="Eliminar imagen">
                                     ✕

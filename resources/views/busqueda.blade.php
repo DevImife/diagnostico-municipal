@@ -643,6 +643,423 @@
 
                         </div>
                     </div>
+
+                    <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 p-2 bg-gray-100 dark:bg-gray-800 items-start">
+                        <div
+                            class="xl:col-span-2 bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
+                            <h2 class="text-2xl font-bold text-vino dark:text-white mb-4">Amenazas y entorno</h2>
+
+                            <div class="flex flex-wrap gap-2 mb-4" x-show="obtenerAmenazasSeleccionadas().length > 0">
+                                <template x-for="amenaza in obtenerAmenazasSeleccionadas()" :key="amenaza.nombre">
+                                    <span
+                                        class="px-3 py-1 text-sm rounded-full bg-vino/10 text-vino dark:bg-vinoClaro/10 dark:text-vinoClaro">
+                                        <span class="font-semibold" x-text="amenaza.nombre"></span>
+                                        <span x-text="' · ' + amenaza.valor"></span>
+                                    </span>
+                                </template>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                <div class="rounded-xl bg-gray-50 dark:bg-gray-800 p-4">
+                                    <h3 class="font-semibold text-gray-800 dark:text-white mb-3">Datos del predio</h3>
+                                    <template
+                                        x-for="[key, value] in obtenerCamposConValor(datosPlantel.medidas || {})"
+                                        :key="key">
+                                        <div
+                                            class="flex justify-between gap-4 border-b border-gray-200 dark:border-gray-700 py-2">
+                                            <span class="font-medium text-gray-600 dark:text-gray-400"
+                                                x-text="etiquetaCampo(key)"></span>
+                                            <span class="text-right text-gray-800 dark:text-gray-200"
+                                                x-text="valorLegible(value)"></span>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <div class="rounded-xl bg-gray-50 dark:bg-gray-800 p-4">
+                                    <h3 class="font-semibold text-gray-800 dark:text-white mb-3">Zona sísmica</h3>
+                                    <template
+                                        x-for="[key, value] in obtenerCamposConValor(datosPlantel.zonaSismica || {})"
+                                        :key="key">
+                                        <div
+                                            class="flex justify-between gap-4 border-b border-gray-200 dark:border-gray-700 py-2">
+                                            <span class="font-medium text-gray-600 dark:text-gray-400"
+                                                x-text="etiquetaCampo(key)"></span>
+                                            <span class="text-right text-gray-800 dark:text-gray-200"
+                                                x-text="valorLegible(value)"></span>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <div class="mt-4 rounded-xl bg-gray-50 dark:bg-gray-800 p-4"
+                                x-show="tieneValor(datosPlantel.otrosElementos?.otrosElementos)">
+                                <h3 class="font-semibold text-gray-800 dark:text-white mb-2">Otros</h3>
+                                <p class="text-sm text-gray-700 dark:text-gray-300"
+                                    x-text="valorLegible(datosPlantel.otrosElementos?.otrosElementos)"></p>
+                            </div>
+
+                            <div class="mt-4" x-show="normalizarLista(datosPlantel.otrosElementos?.imagenAmenaza).length > 0">
+                                <h3 class="font-semibold text-gray-800 dark:text-white mb-3">Fotografías de amenazas</h3>
+                                <div class="flex gap-3 overflow-x-auto">
+                                    <template x-for="img in normalizarLista(datosPlantel.otrosElementos?.imagenAmenaza)"
+                                        :key="img">
+                                        <img :src="resolverRutaArchivo(img, 'amenazas')"
+                                            class="h-28 w-28 object-cover rounded-xl border border-gray-300 dark:border-gray-600 shadow-sm"
+                                            alt="Fotografía de amenaza" />
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
+                            <h2 class="text-2xl font-bold text-vino dark:text-white mb-4">Documento y reportes</h2>
+
+                            <div class="space-y-3 text-sm">
+                                <template
+                                    x-for="[key, value] in obtenerCamposConValor(datosPlantel.documentoPropiedad || {}, ['archivoPropiedad'])"
+                                    :key="key">
+                                    <div
+                                        class="flex justify-between gap-4 border-b border-gray-200 dark:border-gray-700 pb-2">
+                                        <span class="font-medium text-gray-600 dark:text-gray-400"
+                                            x-text="etiquetaCampo(key)"></span>
+                                        <span class="text-right text-gray-800 dark:text-gray-200"
+                                            x-text="valorLegible(value)"></span>
+                                    </div>
+                                </template>
+                            </div>
+
+                            <button type="button" @click="descargarDocumentoPropiedad()"
+                                class="mt-4 w-full px-4 py-2 rounded-xl bg-vino text-white font-semibold hover:bg-vinoOscuro transition">
+                                Abrir documento de propiedad
+                            </button>
+
+                            <div class="mt-6" x-show="normalizarLista(datosPlantel.fotografias).length > 0">
+                                <h3 class="font-semibold text-gray-800 dark:text-white mb-3">Reporte fotográfico final
+                                </h3>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <template x-for="img in normalizarLista(datosPlantel.fotografias)" :key="img">
+                                        <img :src="resolverRutaArchivo(img, 'fotografias')"
+                                            class="h-24 w-full object-cover rounded-xl border border-gray-300 dark:border-gray-600"
+                                            alt="Fotografía final del plantel" />
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 p-2 bg-gray-100 dark:bg-gray-800 items-start">
+                        <div
+                            class="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
+                            <h2 class="text-2xl font-bold text-vino dark:text-white mb-4">Servicios del plantel</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                                <template x-for="[key, value] in obtenerCamposServicio()" :key="key">
+                                    <div class="rounded-xl bg-gray-50 dark:bg-gray-800 p-3">
+                                        <p class="font-medium text-gray-600 dark:text-gray-400"
+                                            x-text="etiquetaCampo(key)"></p>
+                                        <p class="mt-1 text-gray-800 dark:text-gray-200" x-text="valorLegible(value)">
+                                        </p>
+                                    </div>
+                                </template>
+                            </div>
+
+                            <div class="mt-4 rounded-xl bg-gray-50 dark:bg-gray-800 p-4"
+                                x-show="obtenerCamposConValor(datosPlantel.tipoDescarga || {}).length > 0">
+                                <h3 class="font-semibold text-gray-800 dark:text-white mb-2">Tipo de descarga
+                                    sanitaria</h3>
+                                <template x-for="[key, value] in obtenerCamposConValor(datosPlantel.tipoDescarga || {})"
+                                    :key="key">
+                                    <div
+                                        class="flex justify-between gap-4 border-b border-gray-200 dark:border-gray-700 py-2 text-sm">
+                                        <span class="font-medium text-gray-600 dark:text-gray-400"
+                                            x-text="etiquetaCampo(key)"></span>
+                                        <span class="text-right text-gray-800 dark:text-gray-200"
+                                            x-text="valorLegible(value)"></span>
+                                    </div>
+                                </template>
+                            </div>
+
+                            <div class="mt-6 space-y-4" x-show="obtenerGaleriasServicios().length > 0">
+                                <template x-for="galeria in obtenerGaleriasServicios()" :key="galeria.titulo">
+                                    <div>
+                                        <h3 class="font-semibold text-gray-800 dark:text-white mb-2"
+                                            x-text="galeria.titulo"></h3>
+                                        <div class="flex gap-3 overflow-x-auto">
+                                            <template x-for="img in galeria.items" :key="img">
+                                                <img :src="resolverRutaArchivo(img, galeria.folder)"
+                                                    class="h-24 w-24 object-cover rounded-xl border border-gray-300 dark:border-gray-600"
+                                                    alt="Fotografía de servicio" />
+                                            </template>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
+                            <h2 class="text-2xl font-bold text-vino dark:text-white mb-4">Energía eléctrica</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                                <template x-for="[key, value] in obtenerCamposEnergia()" :key="key">
+                                    <div class="rounded-xl bg-gray-50 dark:bg-gray-800 p-3">
+                                        <p class="font-medium text-gray-600 dark:text-gray-400"
+                                            x-text="etiquetaCampo(key)"></p>
+                                        <p class="mt-1 text-gray-800 dark:text-gray-200" x-text="valorLegible(value)">
+                                        </p>
+                                    </div>
+                                </template>
+                            </div>
+
+                            <div class="mt-6 space-y-3" x-show="obtenerArchivosEnergia().length > 0">
+                                <template x-for="archivo in obtenerArchivosEnergia()" :key="archivo.titulo">
+                                    <div class="rounded-xl bg-gray-50 dark:bg-gray-800 p-4">
+                                        <div class="flex items-center justify-between gap-4">
+                                            <div>
+                                                <p class="font-semibold text-gray-800 dark:text-white"
+                                                    x-text="archivo.titulo"></p>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400"
+                                                    x-text="valorLegible(archivo.archivo)"></p>
+                                            </div>
+                                            <button type="button"
+                                                @click="abrirArchivo(resolverRutaArchivo(archivo.archivo, archivo.folder))"
+                                                class="px-3 py-2 rounded-lg bg-vinoClaro text-white text-sm font-semibold hover:bg-vino transition">
+                                                Abrir
+                                            </button>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 p-2 bg-gray-100 dark:bg-gray-800 items-start">
+                        <div
+                            class="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
+                            <h2 class="text-2xl font-bold text-vino dark:text-white mb-4">Complemento de edificios</h2>
+                            <div class="space-y-4" x-show="datosPlantel?.edifTipoEstructura">
+                                <template x-for="(edificio, clave) in datosPlantel.edifTipoEstructura" :key="'extra-' + clave">
+                                    <div class="rounded-xl bg-gray-50 dark:bg-gray-800 p-4">
+                                        <h3 class="font-semibold text-gray-800 dark:text-white mb-3"
+                                            x-text="'Edificio ' + clave"></h3>
+
+                                        <p class="text-sm text-gray-700 dark:text-gray-300 mb-3"
+                                            x-show="tieneValor(edificio.otros)">
+                                            <span class="font-medium text-gray-600 dark:text-gray-400">Observaciones:
+                                            </span>
+                                            <span x-text="valorLegible(edificio.otros)"></span>
+                                        </p>
+
+                                        <div class="grid grid-cols-2 gap-2 text-sm mb-3"
+                                            x-show="datosPlantel.edifEspaciosCantidad?.[clave]">
+                                            <template x-for="(valor, item) in datosPlantel.edifEspaciosCantidad[clave]"
+                                                :key="item">
+                                                <p x-show="tieneValor(valor)">
+                                                    <span class="font-medium text-gray-600 dark:text-gray-400"
+                                                        x-text="etiquetaCampo(item) + ':'"></span>
+                                                    <span class="ml-1 text-gray-800 dark:text-gray-200"
+                                                        x-text="valorLegible(valor)"></span>
+                                                </p>
+                                            </template>
+                                        </div>
+
+                                        <div x-show="normalizarLista(edificio.imagen_danio).length > 0">
+                                            <p class="font-medium text-gray-600 dark:text-gray-400 mb-2">Fotografías de
+                                                daño</p>
+                                            <div class="flex gap-3 overflow-x-auto">
+                                                <template x-for="img in normalizarLista(edificio.imagen_danio)" :key="img">
+                                                    <img :src="resolverRutaArchivo(img, 'edificios_danio')"
+                                                        class="h-24 w-24 object-cover rounded-xl border border-gray-300 dark:border-gray-600"
+                                                        alt="Fotografía de daño del edificio" />
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
+                            <h2 class="text-2xl font-bold text-vino dark:text-white mb-4">Obra exterior</h2>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                                <template x-for="[key, value] in obtenerCamposConValor(datosPlantel.obraExteriorEstado || {})"
+                                    :key="key">
+                                    <div class="rounded-xl bg-gray-50 dark:bg-gray-800 p-3">
+                                        <p class="font-medium text-gray-600 dark:text-gray-400"
+                                            x-text="etiquetaCampo(key)"></p>
+                                        <p class="mt-1 text-gray-800 dark:text-gray-200" x-text="valorLegible(value)">
+                                        </p>
+                                    </div>
+                                </template>
+                            </div>
+
+                            <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                                <template x-for="[key, value] in obtenerCamposObraExterior()" :key="key">
+                                    <div class="rounded-xl bg-gray-50 dark:bg-gray-800 p-3">
+                                        <p class="font-medium text-gray-600 dark:text-gray-400"
+                                            x-text="etiquetaCampo(key)"></p>
+                                        <p class="mt-1 text-gray-800 dark:text-gray-200" x-text="valorLegible(value)">
+                                        </p>
+                                    </div>
+                                </template>
+                            </div>
+
+                            <div class="mt-6 space-y-4" x-show="obtenerArchivosObraExterior().length > 0">
+                                <template x-for="galeria in obtenerArchivosObraExterior()" :key="galeria.titulo">
+                                    <div>
+                                        <h3 class="font-semibold text-gray-800 dark:text-white mb-2"
+                                            x-text="galeria.titulo"></h3>
+                                        <div class="flex gap-3 overflow-x-auto">
+                                            <template x-for="img in galeria.items" :key="img">
+                                                <template x-if="esImagenArchivo(img)">
+                                                    <img :src="resolverRutaArchivo(img, galeria.folder)"
+                                                        class="h-24 w-24 object-cover rounded-xl border border-gray-300 dark:border-gray-600"
+                                                        alt="Archivo de obra exterior" />
+                                                </template>
+                                            </template>
+                                        </div>
+                                        <div class="mt-3 flex flex-wrap gap-2">
+                                            <template x-for="img in galeria.items" :key="img + '-btn'">
+                                                <button type="button"
+                                                    @click="abrirArchivo(resolverRutaArchivo(img, galeria.folder))"
+                                                    class="px-3 py-2 rounded-lg bg-vinoClaro text-white text-sm font-semibold hover:bg-vino transition">
+                                                    Abrir archivo
+                                                </button>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 p-2 bg-gray-100 dark:bg-gray-800 items-start">
+                        <div
+                            class="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
+                            <h2 class="text-2xl font-bold text-vino dark:text-white mb-4">Necesidades de mejora</h2>
+
+                            <div class="space-y-4">
+                                <div class="rounded-xl bg-gray-50 dark:bg-gray-800 p-4">
+                                    <h3 class="font-semibold text-gray-800 dark:text-white mb-2">Necesidades generales
+                                    </h3>
+                                    <template
+                                        x-for="[key, value] in obtenerCamposConValor(datosPlantel.necesidadMejora || {})"
+                                        :key="key">
+                                        <div
+                                            class="flex justify-between gap-4 border-b border-gray-200 dark:border-gray-700 py-2">
+                                            <span class="font-medium text-gray-600 dark:text-gray-400"
+                                                x-text="etiquetaCampo(key)"></span>
+                                            <span class="text-right text-gray-800 dark:text-gray-200"
+                                                x-text="valorLegible(value)"></span>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <div class="rounded-xl bg-gray-50 dark:bg-gray-800 p-4">
+                                    <h3 class="font-semibold text-gray-800 dark:text-white mb-2">Elementos
+                                        estructurales</h3>
+                                    <template
+                                        x-for="[key, value] in obtenerCamposConValor(datosPlantel.elemEstructuraMejora || {})"
+                                        :key="key">
+                                        <div
+                                            class="flex justify-between gap-4 border-b border-gray-200 dark:border-gray-700 py-2">
+                                            <span class="font-medium text-gray-600 dark:text-gray-400"
+                                                x-text="etiquetaCampo(key)"></span>
+                                            <span class="text-right text-gray-800 dark:text-gray-200"
+                                                x-text="valorLegible(value)"></span>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <div class="rounded-xl bg-gray-50 dark:bg-gray-800 p-4">
+                                    <h3 class="font-semibold text-gray-800 dark:text-white mb-2">Elementos exteriores
+                                    </h3>
+                                    <template
+                                        x-for="[key, value] in obtenerCamposConValor(datosPlantel.elemExteriorMejora || {})"
+                                        :key="key">
+                                        <div
+                                            class="flex justify-between gap-4 border-b border-gray-200 dark:border-gray-700 py-2">
+                                            <span class="font-medium text-gray-600 dark:text-gray-400"
+                                                x-text="etiquetaCampo(key)"></span>
+                                            <span class="text-right text-gray-800 dark:text-gray-200"
+                                                x-text="valorLegible(value)"></span>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
+                            <h2 class="text-2xl font-bold text-vino dark:text-white mb-4">Accesibilidad y observaciones
+                            </h2>
+
+                            <div class="space-y-4">
+                                <div class="rounded-xl bg-gray-50 dark:bg-gray-800 p-4">
+                                    <h3 class="font-semibold text-gray-800 dark:text-white mb-2">Accesibilidad</h3>
+                                    <template
+                                        x-for="[key, value] in obtenerCamposConValor(datosPlantel.accesibilidadMejora || {})"
+                                        :key="key">
+                                        <div
+                                            class="flex justify-between gap-4 border-b border-gray-200 dark:border-gray-700 py-2">
+                                            <span class="font-medium text-gray-600 dark:text-gray-400"
+                                                x-text="etiquetaCampo(key)"></span>
+                                            <span class="text-right text-gray-800 dark:text-gray-200"
+                                                x-text="valorLegible(value)"></span>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <div class="rounded-xl bg-gray-50 dark:bg-gray-800 p-4">
+                                    <h3 class="font-semibold text-gray-800 dark:text-white mb-2">Espacios múltiples
+                                    </h3>
+                                    <template
+                                        x-for="[key, value] in obtenerCamposConValor(datosPlantel.espaciosMejora || {})"
+                                        :key="key">
+                                        <div
+                                            class="flex justify-between gap-4 border-b border-gray-200 dark:border-gray-700 py-2">
+                                            <span class="font-medium text-gray-600 dark:text-gray-400"
+                                                x-text="etiquetaCampo(key)"></span>
+                                            <span class="text-right text-gray-800 dark:text-gray-200"
+                                                x-text="valorLegible(value)"></span>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <div class="rounded-xl bg-gray-50 dark:bg-gray-800 p-4">
+                                    <h3 class="font-semibold text-gray-800 dark:text-white mb-2">Descripción de mejora
+                                    </h3>
+                                    <template
+                                        x-for="[key, value] in obtenerCamposConValor(datosPlantel.descripcionMejora || {})"
+                                        :key="key">
+                                        <div
+                                            class="flex justify-between gap-4 border-b border-gray-200 dark:border-gray-700 py-2">
+                                            <span class="font-medium text-gray-600 dark:text-gray-400"
+                                                x-text="etiquetaCampo(key)"></span>
+                                            <span class="text-right text-gray-800 dark:text-gray-200"
+                                                x-text="valorLegible(value)"></span>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <div class="rounded-xl bg-gray-50 dark:bg-gray-800 p-4">
+                                    <h3 class="font-semibold text-gray-800 dark:text-white mb-2">Bienes y mobiliario
+                                    </h3>
+                                    <template x-for="[key, value] in obtenerCamposConValor(datosPlantel.bienes || {})"
+                                        :key="key">
+                                        <div
+                                            class="flex justify-between gap-4 border-b border-gray-200 dark:border-gray-700 py-2">
+                                            <span class="font-medium text-gray-600 dark:text-gray-400"
+                                                x-text="etiquetaCampo(key)"></span>
+                                            <span class="text-right text-gray-800 dark:text-gray-200"
+                                                x-text="valorLegible(value)"></span>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="flex justify-end items-center space-x-3 mt-6">
@@ -979,16 +1396,30 @@
                             // 🔹 Intentar parsear campos
                             this.parseField("matricula", true, []);
                             this.parseField("amenazas", true, {});
+                            this.parseField("otrosElementos", true, {});
+                            this.parseField("medidas", true, {});
+                            this.parseField("zonaSismica", true, {});
+                            this.parseField("servicioPlantel", true, {});
                             this.parseField("bienes", true, {});
                             this.parseField("edifTipoEstructura", false, {});
                             this.parseField("edifCondiciones", true, {});
                             this.parseField("edifEspaciosCantidad", true, {});
                             this.parseField("servSanitarioCantidad", true, {});
                             this.parseField("servSanitarioEstado", true, {});
+                            this.parseField("tipoDescarga", true, {});
+                            this.parseField("obraExteriorEstado", true, {});
+                            this.parseField("obraExteriorComplementos", true, {});
+                            this.parseField("necesidadMejora", true, {});
+                            this.parseField("elemEstructuraMejora", true, {});
+                            this.parseField("elemExteriorMejora", true, {});
+                            this.parseField("accesibilidadMejora", true, {});
+                            this.parseField("espaciosMejora", true, {});
+                            this.parseField("descripcionMejora", true, {});
+                            this.parseField("energiaElectrica", true, {});
+                            this.parseField("fotografias", true, []);
                             // this.parseField("documentoPropiedad", false, {});
                             this.parseDocumentoPropiedad();
 
-                            let fotos = JSON.parse(this.datosPlantel.fotografias ?? "[]");
 
                             // 💡 Mostrar mapa
                             this.$nextTick(() => this.mostrarMapa());
@@ -1085,6 +1516,273 @@
                             return total + totalPersonal;
                         }, 0);
                     },
+                    saneText(value) {
+                        if (typeof value !== 'string') return value;
+
+                        const replacements = {
+                            'Ã¡': 'á',
+                            'Ã©': 'é',
+                            'Ã­': 'í',
+                            'Ã³': 'ó',
+                            'Ãº': 'ú',
+                            'Ã': 'Á',
+                            'Ã‰': 'É',
+                            'Ã': 'Í',
+                            'Ã“': 'Ó',
+                            'Ãš': 'Ú',
+                            'Ã±': 'ñ',
+                            'Ã‘': 'Ñ',
+                            'Â¿': '¿',
+                            'Â¡': '¡',
+                            'â€”': '—',
+                            'â€™': '’',
+                            'âœ•': '✕',
+                        };
+
+                        return Object.entries(replacements).reduce((text, [broken, fixed]) => {
+                            return text.split(broken).join(fixed);
+                        }, value);
+                    },
+                    tieneValor(value) {
+                        if (Array.isArray(value)) return value.length > 0;
+                        if (value && typeof value === 'object') return Object.keys(value).length > 0;
+                        return value !== null && value !== undefined && String(value).trim() !== '';
+                    },
+                    etiquetaCampo(key) {
+                        const labels = {
+                            otrosElementos: 'Otros',
+                            superficieTerreno: 'Superficie total del terreno',
+                            superficieDesplante: 'Superficie de desplante',
+                            superficieConstruida: 'Superficie construida',
+                            medidasColindancia: 'Medidas y colindancias',
+                            tipo_suelo: 'Tipo de suelo',
+                            tipo_vialidad: 'Tipo de vialidad',
+                            agua_potable: 'Agua potable',
+                            drenaje_sanitario: 'Drenaje sanitario',
+                            energia_electrica: 'Energía eléctrica',
+                            red_agua_potable: 'Red de agua potable',
+                            tipo_drenaje: 'Tipo de drenaje',
+                            proveedor_energia: 'Proveedor de energía',
+                            aire_acondicionado: 'Aire acondicionado',
+                            red_voz_datos: 'Red de voz y datos',
+                            telefonia: 'Telefonía',
+                            estado_general: 'Estado general',
+                            docPropiedad: 'Documento de propiedad',
+                            tipoDocumento: 'Tipo de documento',
+                            otroTipo: 'Otro tipo',
+                            numeroServicio: 'Número de servicio',
+                            numeroMedidior: 'Número de medidor',
+                            activoMedidor: 'Activo del medidor',
+                            certificadoUvie: 'Certificado UVIE',
+                            montoAdeudo: 'Monto de adeudo',
+                            fotografiaUsoMultiples: 'Fotografías de usos múltiples',
+                        };
+
+                        const cleanKey = this.saneText(String(key));
+
+                        if (labels[cleanKey]) {
+                            return labels[cleanKey];
+                        }
+
+                        return cleanKey
+                            .replace(/_/g, ' ')
+                            .replace(/\s+/g, ' ')
+                            .trim()
+                            .replace(/\b\w/g, (char) => char.toUpperCase());
+                    },
+                    valorLegible(value) {
+                        if (!this.tieneValor(value)) return '—';
+
+                        if (Array.isArray(value)) {
+                            return value.map((item) => this.valorLegible(item)).join(', ');
+                        }
+
+                        if (typeof value === 'object') {
+                            return Object.entries(value)
+                                .filter(([, item]) => this.tieneValor(item))
+                                .map(([key, item]) => `${this.etiquetaCampo(key)}: ${this.valorLegible(item)}`)
+                                .join(', ');
+                        }
+
+                        return this.saneText(String(value));
+                    },
+                    obtenerCamposConValor(source, omit = []) {
+                        if (!source || typeof source !== 'object' || Array.isArray(source)) {
+                            return [];
+                        }
+
+                        const ignored = new Set(omit);
+
+                        return Object.entries(source).filter(([key, value]) => {
+                            return !ignored.has(key) && this.tieneValor(value);
+                        });
+                    },
+                    normalizarLista(value) {
+                        if (Array.isArray(value)) {
+                            return value.filter((item) => this.tieneValor(item));
+                        }
+
+                        if (!this.tieneValor(value)) {
+                            return [];
+                        }
+
+                        if (typeof value === 'string') {
+                            const text = value.trim();
+
+                            if (text.startsWith('[')) {
+                                try {
+                                    const parsed = JSON.parse(text);
+                                    return Array.isArray(parsed) ? parsed.filter((item) => this.tieneValor(item)) : [];
+                                } catch (e) {
+                                    return [value];
+                                }
+                            }
+
+                            return [value];
+                        }
+
+                        return [];
+                    },
+                    esImagenArchivo(path) {
+                        if (!path || typeof path !== 'string') return false;
+                        return /\.(jpg|jpeg|png|webp|gif|bmp|avif|heic|heif|jfif)$/i.test(path);
+                    },
+                    resolverRutaArchivo(path, folder = '') {
+                        if (!path || typeof path !== 'string') return null;
+
+                        const normalized = path.replace(/\\/g, '/');
+
+                        if (/^https?:\/\//i.test(normalized) || normalized.startsWith('/storage/')) {
+                            return normalized;
+                        }
+
+                        if (normalized.startsWith('planteles/') || normalized.startsWith('temp/')) {
+                            return `/storage/${normalized}`;
+                        }
+
+                        const plantelId = this.datosPlantel?.plantel_id ?? this.plantel_id;
+                        const fileName = normalized.split('/').pop();
+
+                        if (plantelId && folder) {
+                            return `/storage/planteles/${plantelId}/${folder}/${fileName}`;
+                        }
+
+                        return `/storage/${normalized}`;
+                    },
+                    obtenerAmenazasSeleccionadas() {
+                        return this.obtenerCamposConValor(this.datosPlantel?.amenazas || {}).map(([name, distance]) => ({
+                            nombre: this.saneText(name),
+                            valor: this.saneText(String(distance)),
+                        }));
+                    },
+                    obtenerCamposServicio() {
+                        return this.obtenerCamposConValor(this.datosPlantel?.servicioPlantel || {}, [
+                            'archivo_vialidad',
+                            'fotografia_agua_potable',
+                            'fotografia_drenaje',
+                            'fotografia_energia',
+                            'fotografia_especiales',
+                            'fotografia_tecnologias',
+                            'fotografias_accesibilidad',
+                        ]);
+                    },
+                    obtenerGaleriasServicios() {
+                        const servicios = this.datosPlantel?.servicioPlantel || {};
+
+                        return [{
+                                titulo: 'Vialidad y acceso',
+                                folder: 'servicios',
+                                items: this.normalizarLista(servicios.archivo_vialidad),
+                            },
+                            {
+                                titulo: 'Agua potable',
+                                folder: 'servicios',
+                                items: this.normalizarLista(servicios.fotografia_agua_potable),
+                            },
+                            {
+                                titulo: 'Drenaje',
+                                folder: 'servicios',
+                                items: this.normalizarLista(servicios.fotografia_drenaje),
+                            },
+                            {
+                                titulo: 'Energía eléctrica',
+                                folder: 'servicios',
+                                items: this.normalizarLista(servicios.fotografia_energia),
+                            },
+                            {
+                                titulo: 'Instalaciones especiales',
+                                folder: 'servicios',
+                                items: this.normalizarLista(servicios.fotografia_especiales),
+                            },
+                            {
+                                titulo: 'Tecnologías',
+                                folder: 'servicios',
+                                items: this.normalizarLista(servicios.fotografia_tecnologias),
+                            },
+                            {
+                                titulo: 'Accesibilidad',
+                                folder: 'servicios',
+                                items: this.normalizarLista(servicios.fotografias_accesibilidad),
+                            },
+                        ].filter((gallery) => gallery.items.length > 0);
+                    },
+                    obtenerCamposEnergia() {
+                        return this.obtenerCamposConValor(this.datosPlantel?.energiaElectrica || {}, [
+                            'documento',
+                            'documento_path',
+                            'fotografiaMedidor',
+                            'fotografiaMedidor_path',
+                            'archivoCertificadovie',
+                            'archivoCertificadovie_path',
+                        ]);
+                    },
+                    obtenerArchivosEnergia() {
+                        const energia = this.datosPlantel?.energiaElectrica || {};
+
+                        return [{
+                                titulo: 'Documento de energía',
+                                folder: 'energia',
+                                archivo: energia.documento || energia.documento_path || null,
+                            },
+                            {
+                                titulo: 'Fotografía del medidor',
+                                folder: 'energia',
+                                archivo: energia.fotografiaMedidor || energia.fotografiaMedidor_path || null,
+                            },
+                            {
+                                titulo: 'Certificado UVIE',
+                                folder: 'energia',
+                                archivo: energia.archivoCertificadovie || energia.archivoCertificadovie_path || null,
+                            },
+                        ].filter((item) => this.tieneValor(item.archivo));
+                    },
+                    obtenerCamposObraExterior() {
+                        return this.obtenerCamposConValor(this.datosPlantel?.obraExteriorComplementos || {}, [
+                            'fotografiaUsoMultiples',
+                            'fotografiaUsoMultiples_paths',
+                            'croquis',
+                            'croquis_path',
+                        ]);
+                    },
+                    obtenerArchivosObraExterior() {
+                        const obraExterior = this.datosPlantel?.obraExteriorComplementos || {};
+
+                        return [{
+                                titulo: 'Fotografías de obra exterior',
+                                folder: 'obra_exterior',
+                                items: this.normalizarLista(obraExterior.fotografiaUsoMultiples || obraExterior.fotografiaUsoMultiples_paths),
+                            },
+                            {
+                                titulo: 'Croquis',
+                                folder: 'obra_exterior',
+                                items: this.normalizarLista(obraExterior.croquis || obraExterior.croquis_path),
+                            },
+                        ].filter((item) => item.items.length > 0);
+                    },
+                    abrirArchivo(url) {
+                        if (!url) return;
+                        window.open(url, '_blank');
+                    },
                     parseDocumentoPropiedad() {
                         try {
                             let value = this.datosPlantel.documentoPropiedad;
@@ -1093,6 +1791,11 @@
 
                             if (!value) {
                                 this.datosPlantel.documentoPropiedad = {};
+                                return;
+                            }
+
+                            if (typeof value === "object") {
+                                this.datosPlantel.documentoPropiedad = value;
                                 return;
                             }
 
@@ -1255,12 +1958,6 @@
 
                         const archivoCompleto = this.datosPlantel?.documentoPropiedad?.archivoPropiedad;
 
-                        const nombreArchivo = archivoCompleto ?
-                            archivoCompleto.split('/').pop() :
-                            null;
-
-                        // console.log(nombreArchivo);
-
                         Swal.fire({
                             title: 'Abrir documento',
                             text: '¿Deseas abrir el documento de propiedad?',
@@ -1286,7 +1983,7 @@
                                 });
                                 return;
                             }
-                            const url = `/storage/planteles/${this.plantel_id}/documentos_propiedad/${nombreArchivo}`;
+                            const url = this.resolverRutaArchivo(archivoCompleto, 'documentos_propiedad');
 
                             window.open(url, '_blank'); // 🔥 abrir en nueva pestaña
                         });

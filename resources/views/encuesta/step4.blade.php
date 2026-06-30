@@ -4,7 +4,7 @@
         <h2 class="text-2xl align-middle font-semibold text-vino dark:text-gray-100 text-center mt-6 break-normal">
             EMPLAZAMIENTO Y ENTORNO, POSIBLES AMENAZAS</h2>
     </div>
-    <!-- Cards aquí -->
+    <!-- Cards aquÃ­ -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
         <div class="overflow-x-auto rounded-xl border border-gray-300 dark:border-gray-700 ">
             {{-- matriz --}}
@@ -18,11 +18,11 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                    <template x-for="(a, i) in amenazas" :key="i">
+                    <template x-for="(a, i) in amenazasLista" :key="i">
                         <tr class="hover:bg-gray-50 dark:hover:bg-gray-800">
                             <!-- Nombre de la amenaza -->
                             <td class="py-2 px-2 text-left" x-text="a"></td>
-                            <!-- Radios dinámicos -->
+                            <!-- Radios dinÃ¡micos -->
                             <template x-for="d in distancias" :key="d">
                                 <td>
                                     <input type="radio" :name="a" :value="d"
@@ -48,8 +48,8 @@
                 class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 mt-9 border border-transparent dark:border-gray-600">
                 <!-- Icono centrado arriba -->
                 <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                    <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
-                        <!-- Ícono Lucide o Heroicons -->
+                    <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                        <!-- Ãcono Lucide o Heroicons -->
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" class="lucide lucide-info-icon lucide-info">
@@ -74,7 +74,7 @@
 
                 <!-- Icono centrado arriba -->
                 <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                    <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                    <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" class="lucide lucide-file-image-icon lucide-file-image">
@@ -92,7 +92,7 @@
                     </label>
                     <p>Puedes seleccionar hasta 5 archivos</p>
 
-                    <!-- Botón personalizado -->
+                    <!-- BotÃ³n personalizado -->
                     <label for="entornoyamenazas"
                         class="cursor-pointer inline-flex items-center justify-center w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-50 dark:bg-gray-900 dark:border-gray-600 dark:text-white text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -108,23 +108,7 @@
                     <!-- Input real oculto -->
                     <input type="file" id="entornoyamenazas" name="entornoyamenazas" accept="image/*" multiple
                         class="hidden"
-                        @change="
-                                const files = Array.from($event.target.files);
-
-                                if (files.length > 5) {
-                                    notyf.error('Solo puedes subir máximo 5 imágenes');
-                                    $event.target.value = '';
-                                    return;
-                                }
-
-                                preview = [];
-                                otrasAmenazas.imagenAmenaza = [];
-
-                                files.forEach(file => {
-                                    preview.push(URL.createObjectURL(file));
-                                    otrasAmenazas.imagenAmenaza.push(file);
-                                });
-                            " />
+                        @change="agregarImagenAmenaza($event.target.files); $event.target.value = ''" />
 
                     <!-- Nombre del archivo -->
                     <p x-text="nombreArchivo" class="mt-2 text-sm text-gray-500 dark:text-gray-300 truncate">
@@ -136,25 +120,26 @@
 
                     <!-- Vista previa -->
 
-                    <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4" x-show="preview.length > 0">
-                        <template x-for="(img, index) in preview" :key="index">
+                    <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4"
+                        x-show="otrasAmenazas.imagenAmenaza.length > 0">
+                        <template x-for="(img, index) in otrasAmenazas.imagenAmenaza" :key="index">
                             <div class="relative group">
-                                <img :src="img"
+                                <img :src="obtenerSrcGaleria(img)"
                                     class="w-full h-32 object-cover rounded-lg border border-gray-300 dark:border-gray-600" />
 
-                                <!-- Botón eliminar -->
-                                <button type="button"
-                                    @click="
-                                    preview.splice(index, 1);
-                                    otrasAmenazas.imagenAmenaza.splice(index, 1);
-                                    "
+                                <!-- BotÃ³n eliminar -->
+                                <button type="button" @click="eliminarImagenAmenaza(index)"
                                     class="absolute top-2 right-2 bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition"
                                     title="Eliminar imagen">
-                                    ✕
+                                    âœ•
                                 </button>
                             </div>
                         </template>
                     </div>
+                    <p x-show="editando && otrasAmenazas.imagenAmenaza.length === 0"
+                        class="mt-4 text-sm text-amber-700 dark:text-amber-300">
+                        Esta encuesta no tiene imagen guardada en este paso.
+                    </p>
                 </div>
             </div>
 
@@ -169,8 +154,8 @@
                 class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 mt-9 border border-transparent dark:border-gray-600">
                 <!-- Icono centrado arriba -->
                 <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                    <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
-                        <!-- Ícono Lucide o Heroicons -->
+                    <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                        <!-- Ãcono Lucide o Heroicons -->
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" class="lucide lucide-brick-wall-icon lucide-brick-wall">
@@ -199,8 +184,8 @@
                 class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 mt-9 border border-transparent dark:border-gray-600">
                 <!-- Icono centrado arriba -->
                 <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                    <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
-                        <!-- Ícono Lucide o Heroicons -->
+                    <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                        <!-- Ãcono Lucide o Heroicons -->
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" class="lucide lucide-brick-wall-icon lucide-brick-wall">
@@ -229,8 +214,8 @@
                 class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 mt-9 border border-transparent dark:border-gray-600">
                 <!-- Icono centrado arriba -->
                 <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                    <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
-                        <!-- Ícono Lucide o Heroicons -->
+                    <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                        <!-- Ãcono Lucide o Heroicons -->
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" class="lucide lucide-brick-wall-icon lucide-brick-wall">
@@ -260,7 +245,7 @@
                 class="relative bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 mt-4">
                 <!-- Icono centrado arriba -->
                 <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                    <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                    <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" class="lucide lucide-brick-wall-icon lucide-brick-wall">
@@ -289,3 +274,4 @@
     </div>
 
 </div>
+

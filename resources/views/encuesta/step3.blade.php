@@ -9,7 +9,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 mt-8">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -32,7 +32,8 @@
                 <label for="directorobras" class="text-lg font-semibold text-gray-900 dark:text-white  mb-5">
                     Nombre del Director de Obras Públicas
                 </label>
-                <input type="text" id="directorobras" name="directorobras" placeholder="Ej. Juan José" x-model="directorObras.directorobras"
+                <input type="text" id="directorobras" name="directorobras" placeholder="Ej. Juan José"
+                    x-model="directorObras.directorobras"
                     class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-vino focus:border-transparent transition dark:bg-gray-950 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" />
             </div>
         </div>
@@ -41,7 +42,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 mt-8">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -61,8 +62,7 @@
                 </div>
             </div>
             <div class="mt-4">
-                <label for="apellidos_director_obras"
-                    class="text-lg font-semibold text-gray-900 dark:text-white  mb-4">
+                <label for="apellidos_director_obras" class="text-lg font-semibold text-gray-900 dark:text-white  mb-4">
                     Apellidos del Director
                 </label>
                 <input type="text" id="apellidos_director_obras" name="apellidos_director_obras"
@@ -74,7 +74,7 @@
         <div
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center  transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 mt-8">
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -88,8 +88,7 @@
                 </div>
             </div>
             <div class="mt-4">
-                <label for="direccion_director_obras"
-                    class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                <label for="direccion_director_obras" class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                     Dirección
                 </label>
                 <input type="text" id="direccion_director_obras" name="direccion_director_obras"
@@ -101,7 +100,7 @@
         <div
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 mt-8">
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -116,7 +115,7 @@
                     Número de Teléfono Oficina
                 </label>
                 <input type="number" id="telefono_director_obras" name="telefono_director_obras"
-                    placeholder="Ej. 7222222222"  x-model="directorObras.telefono_director_obras"
+                    placeholder="Ej. 7222222222" x-model="directorObras.telefono_director_obras"
                     oninput="if(this.value.length > 10) this.value = this.value.slice(0, 10);"
                     class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-vino focus:border-transparent transition dark:bg-gray-950 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" />
             </div>
@@ -125,7 +124,7 @@
         <div
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 mt-4 border border-transparent dark:border-gray-600 mt-8">
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -150,7 +149,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 mt-4 border border-transparent dark:border-gray-600 mt-8">
 
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -178,7 +177,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 mt-8">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -202,7 +201,7 @@
                     Nombre del Director de Desarrollo Urbano
                 </label>
                 <input type="text" id="director_desarrallo_urbano" name="director_desarrallo_urbano"
-                    placeholder="Ej. Juan José"  x-model="directorObras.director_desarrallo_urbano"
+                    placeholder="Ej. Juan José" x-model="directorObras.director_desarrallo_urbano"
                     class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-vino focus:border-transparent transition dark:bg-gray-950 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" />
             </div>
         </div>
@@ -211,7 +210,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 mt-8">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -244,7 +243,7 @@
         <div
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center  transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 mt-8">
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -264,7 +263,7 @@
                     Dirección
                 </label>
                 <input type="text" id="direccion_director_desarrollo" name="direccion_director_desarrollo"
-                    placeholder="Ej. Calle Número"  x-model="directorObras.direccion_director_desarrollo"
+                    placeholder="Ej. Calle Número" x-model="directorObras.direccion_director_desarrollo"
                     class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-vino focus:border-transparent transition dark:bg-gray-950 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" />
             </div>
         </div>
@@ -272,7 +271,7 @@
         <div
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 mt-8">
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -297,7 +296,7 @@
         <div
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 mt-4 border border-transparent dark:border-gray-600 mt-8">
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -322,7 +321,7 @@
         <div
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 mt-4 border border-transparent dark:border-gray-600 mt-8">
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
