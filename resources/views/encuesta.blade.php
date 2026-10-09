@@ -8,7 +8,7 @@
     <div class="py-4">
         <div class="mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-950 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="py-8" x-data="formularioEncuesta()" x-ref="encuesta">
+                <div class="py-8" x-data="formularioEncuesta()" x-ref="encuesta" :class="editando ? 'survey-edit-mode' : ''">
                     <div class="max-w-4xl mx-auto px-6 mb-12">
                         <!-- 🔹 Versión completa (visible en pantallas medianas o mayores) -->
                         <div class="hidden sm:flex flex-wrap justify-between items-start gap-y-4 gap-x-2">
@@ -31,6 +31,17 @@
                             <div class="text-center mt-2 text-xs text-gray-700 dark:text-gray-300">
                                 Paso <span x-text="step"></span> de 13
                             </div>
+                        </div>
+                    </div>
+
+                    <div x-show="editando" x-transition class="max-w-4xl mx-auto px-6 mb-8">
+                        <div
+                            class="rounded-2xl border border-[#f59e0b] bg-white px-5 py-4 text-amber-900 shadow-sm dark:border-amber-700 dark:bg-amber-950/60 dark:text-amber-100">
+                            <p class="text-sm font-semibold uppercase tracking-[0.2em]">Modo edición</p>
+                            <p class="mt-1 text-sm">
+                                Estás trabajando sobre un plantel con encuesta previa. Los cards cambian de tono para
+                                que sepas que estás en edición.
+                            </p>
                         </div>
                     </div>
 
@@ -100,7 +111,7 @@
                                     class="bg-vino dark:bg-white dark:text-black text-white px-4 py-2 rounded
                                     hover:bg-vino/90 transition
                                     disabled:opacity-50 disabled:cursor-not-allowed">
-                                    <span x-show="!subiendo">Siguiente</span>
+                                    <span x-show="!subiendo" x-text="editando ? 'Guardar y continuar' : 'Siguiente'"></span>
                                     <span x-show="subiendo">Subiendo archivos…</span>
                                 </button>
                             </template>
@@ -108,7 +119,7 @@
                             <template x-if="step === 13">
                                 <button type="submit"
                                     class="bg-vino text-white px-4 py-2 rounded hover:bg-vino/90 transition">
-                                    Enviar
+                                    <span x-text="editando ? 'Actualizar encuesta' : 'Enviar'"></span>
                                 </button>
                             </template>
                         </div>
@@ -149,5 +160,26 @@
             var surveyUrl = "{{ route('survey.store') }}";
         </script>
     @endpush
+
+    <style>
+        .survey-edit-mode [data-step] .rounded-xl.shadow-md {
+            border-color: rgba(245, 159, 10) !important;
+            background: #ffff;
+        }
+
+        .dark .survey-edit-mode [data-step] .rounded-xl.shadow-md {
+            border-color: rgba(245, 158, 11, 0.45) !important;
+            background: linear-gradient(180deg, rgba(120, 53, 15, 0.32) 0%, rgba(3, 7, 18, 0.94) 100%);
+            box-shadow: 0 14px 32px rgba(245, 158, 11, 0.12);
+        }
+
+        .survey-edit-mode .icon-step {
+            background-color: #f59e0b !important;
+        }
+
+        .dark .survey-edit-mode .icon-step {
+            background-color: #b45309 !important;
+        }
+    </style>
 
 </x-app-layout>

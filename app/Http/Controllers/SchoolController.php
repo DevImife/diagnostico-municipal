@@ -43,6 +43,7 @@ class SchoolController extends Controller
             $usuarioId = Auth::id();
             $plantelId = $request->plantel_id;
             $formToken = $request->form_token;
+            $modoEdicion = $request->boolean('modo_edicion');
 
             /* ======================================================
               🔹 DECODIFICAR JSON
@@ -78,7 +79,7 @@ class SchoolController extends Controller
               🔹 FUNCIÓN PARA MOVER DESDE TEMP
             ====================================================== */
 
-            $moverDesdeTemp = function ($paths, $carpetaFinal) use ($plantelId) {
+            $moverDesdeTemp = function ($paths, $carpetaFinal, $guardarRutaCompleta = false) use ($plantelId) {
 
                 $guardados = [];
 
@@ -86,18 +87,38 @@ class SchoolController extends Controller
                     return $guardados;
                 }
 
-                foreach ($paths as $rutaTemp) {
+                foreach ((array) $paths as $rutaTemp) {
+
+                    if (is_array($rutaTemp)) {
+                        $rutaTemp = $rutaTemp['path']
+                            ?? $rutaTemp['preview']
+                            ?? $rutaTemp['imagenAmenaza_path']
+                            ?? null;
+                    }
+
+                    if (! is_string($rutaTemp) || trim($rutaTemp) === '') {
+                        continue;
+                    }
+
+                    $rutaTemp = ltrim(str_replace('/storage/', '', str_replace('\\', '/', $rutaTemp)), '/');
+
+                    $nombre = basename($rutaTemp);
+                    $rutaNueva = "planteles/{$plantelId}/{$carpetaFinal}/{$nombre}";
+
+                    if (Storage::disk('public')->exists($rutaNueva)) {
+                        $guardados[] = $guardarRutaCompleta ? $rutaNueva : $nombre;
+                        continue;
+                    }
 
                     if (! Storage::disk('public')->exists($rutaTemp)) {
                         continue;
                     }
 
-                    $nombre = basename($rutaTemp);
-                    $rutaNueva = "planteles/{$plantelId}/{$carpetaFinal}/{$nombre}";
+                    if ($rutaTemp !== $rutaNueva) {
+                        Storage::disk('public')->move($rutaTemp, $rutaNueva);
+                    }
 
-                    Storage::disk('public')->move($rutaTemp, $rutaNueva);
-
-                    $guardados[] = $nombre;
+                    $guardados[] = $guardarRutaCompleta ? $rutaNueva : $nombre;
                 }
 
                 return $guardados;
@@ -107,14 +128,21 @@ class SchoolController extends Controller
               🔹 MOVER STEP 4 - AMENAZAS
             ====================================================== */
 
-            if (! empty($otrosElementos['imagenAmenaza_path'])) {
+            $imagenAmenaza = $otrosElementos['imagenAmenaza_path'] ?? $otrosElementos['imagenAmenaza'] ?? [];
+
+            if (! empty($imagenAmenaza)) {
 
                 $resultado = $moverDesdeTemp(
-                    [$otrosElementos['imagenAmenaza_path']],
-                    'amenazas'
+                    is_array($imagenAmenaza) ? $imagenAmenaza : [$imagenAmenaza],
+                    'amenazas',
+                    true
                 );
 
-                $otrosElementos['imagenAmenaza'] = $resultado[0] ?? null;
+                $otrosElementos['imagenAmenaza'] = $resultado;
+                $otrosElementos['imagenAmenaza_path'] = $resultado;
+            } else {
+                $otrosElementos['imagenAmenaza'] = [];
+                $otrosElementos['imagenAmenaza_path'] = [];
             }
 
             /* ======================================================
@@ -136,13 +164,13 @@ class SchoolController extends Controller
             ====================================================== */
 
             $camposServicios = [
-                'fotografia_agua_potable_path',
-                'fotografia_drenaje_path',
-                'fotografia_energia_path',
-                'fotografia_especiales_path',
-                'fotografia_tecnologias_path',
-                'fotografias_accesibilidad_path',
-                'archivo_vialidad_path',
+                'fotografia_agua_potable',
+                'fotografia_drenaje',
+                'fotografia_energia',
+                'fotografia_especiales',
+                'fotografia_tecnologias',
+                'fotografias_accesibilidad',
+                'archivo_vialidad',
             ];
 
             foreach ($camposServicios as $campo) {
@@ -150,13 +178,11 @@ class SchoolController extends Controller
                 if (! empty($servicioPlantel[$campo])) {
 
                     $resultado = $moverDesdeTemp(
-                        [$servicioPlantel[$campo]],
+                        is_array($servicioPlantel[$campo]) ? $servicioPlantel[$campo] : [$servicioPlantel[$campo]],
                         'servicios'
                     );
 
-                    $campoFinal = str_replace('_path', '', $campo);
-
-                    $servicioPlantel[$campoFinal] = $resultado[0] ?? null;
+                    $servicioPlantel[$campo] = $resultado;
                 }
             }
 
@@ -229,17 +255,17 @@ class SchoolController extends Controller
               🔹 CREAR ENCUESTA
             ====================================================== */
 
-            $survey = Survey::create([
+            $payload = [
                 'usuario_id' => $usuarioId,
                 'plantel_id' => $plantelId,
                 // 'ccts' => json_encode($ccts),
                 'matricula' => json_encode($matricula),
-                'amenazas' => json_encode($amenazas),
-                'otrosElementos' => json_encode($otrosElementos),
-                'medidas' => json_encode($medidas),
+                'amenazas' => $amenazas,
+                'otrosElementos' => $otrosElementos,
+                'medidas' => $medidas,
                 'zonaSismica' => json_encode($zonaSismica),
-                'documentoPropiedad' => json_encode($request->documentoPropiedad),
-                'servicioPlantel' => json_encode($request->servicioPlantel),
+                'documentoPropiedad' => json_encode($documentoPropiedad),
+                'servicioPlantel' => json_encode($servicioPlantel),
                 'servSanitarioCantidad' => json_encode($servSanitarioCantidad),
                 'servSanitarioEstado' => json_encode($servSanitarioEstado),
                 'tipoDescarga' => json_encode($tipoDescarga),
@@ -257,7 +283,19 @@ class SchoolController extends Controller
                 'bienes' => json_encode($bienes),
                 'energiaElectrica' => json_encode($energia),
                 'fotografias' => json_encode($fotografiasFinal),
-            ]);
+            ];
+
+            if ($modoEdicion) {
+                $survey = Survey::where('plantel_id', $plantelId)->first();
+
+                if ($survey) {
+                    $survey->update($payload);
+                } else {
+                    $survey = Survey::create($payload);
+                }
+            } else {
+                $survey = Survey::create($payload);
+            }
             // $survey = Survey::create([
             //     'usuario_id' => $usuarioId,
             //     'plantel_id' => $plantelId,

@@ -14,7 +14,7 @@
             class="col-span-1 bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 mt-4">
 
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round" class="lucide lucide-file-image">
@@ -30,6 +30,9 @@
                 <label class="block text-lg font-semibold text-gray-900 dark:text-white mb-4">
                     Anexar Archivos
                 </label>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                    Puedes conservar hasta 5 imagenes. Si estas editando, puedes quitar las actuales y subir nuevas.
+                </p>
 
                 <label :for="'fotosGenerales_' + edificio"
                     class="cursor-pointer inline-flex items-center justify-center w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-50 dark:bg-gray-900 dark:border-gray-600 dark:text-white text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
@@ -46,18 +49,14 @@
                 </label>
 
                 <input type="file" :id="'fotosGenerales_' + edificio" accept="image/*" multiple class="hidden"
-                    @change="
-                      if ($event.target.files.length > 0) {
-                          let files = Array.from($event.target.files).slice(0, 5);
-                          subirFotosFinales(files);
-                      }
-                  " />
+                    @change="manejarCambioFotografiasFinales($event)" />
+
+                <p class="mt-3 text-xs font-medium text-vino dark:text-dorado">
+                    <span x-text="fotografias.length"></span> / 5 imagenes seleccionadas
+                </p>
 
                 <button type="button" class="mt-4 text-sm text-red-600 hover:underline"
-                    @click="
-                        fotografias = [];
-                        fotografias_paths = [];
-                    "
+                    @click="limpiarFotografiasFinales()"
                     x-show="fotografias.length > 0">
                     Limpiar selección
                 </button>
@@ -87,10 +86,7 @@
 
                             <!-- Botón eliminar -->
                             <button type="button"
-                                @click="
-                            fotografias.splice(i,1);
-                            fotografias_paths.splice(i,1);
-                        "
+                                @click="eliminarFotografiaFinal(i)"
                                 class="absolute top-2 right-2 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition">
                                 ✕
                             </button>

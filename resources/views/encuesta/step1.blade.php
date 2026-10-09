@@ -12,7 +12,7 @@
                 class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 w-3/4">
                 <!-- Icono -->
                 <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                    <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                    <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="lucide lucide-book-key">
@@ -46,7 +46,7 @@
                 class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 w-full mt-4 md:mt-0">
                 <!-- Icono -->
                 <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                    <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                    <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="lucide lucide-school">
@@ -77,7 +77,7 @@
     </div>
 
 
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-start mt-12" x-show="tieneDatos && !editando" x-transition>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-start mt-12" x-show="tieneDatos" x-transition>
 
         {{-- <div class="mb-12 p-2">
             <h2
@@ -90,7 +90,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 p-2">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -119,7 +119,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 p-2">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -148,7 +148,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 p-2">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -175,7 +175,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -200,7 +200,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 mt-6">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -226,7 +226,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 mt-6">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -252,7 +252,7 @@
 
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round" class="lucide lucide-file-image-icon lucide-file-image">
@@ -365,7 +365,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 mt-6">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -394,7 +394,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 mt-4">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -423,7 +423,7 @@
             class="bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 text-center transition-transform transform hover:-translate-y-2 hover:shadow-lg duration-300 border border-transparent dark:border-gray-600 mt-4">
             <!-- Icono centrado arriba -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                <div class="bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
+                <div class="icon-step bg-cafe dark:bg-cafe text-white rounded-full p-3 shadow-md">
                     <!-- Ícono Lucide o Heroicons -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

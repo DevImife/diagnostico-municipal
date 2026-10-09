@@ -175,11 +175,19 @@
     },
 
     3: async function () {
+      this.saveStepData(3, {
+        plantel_id:
+          this.idPlantelActual ??
+          this.planteles[0]?.plantel?.id ??
+          this.planteles[0]?.plantel_id,
+        directorObras: this.directorObras,
+      });
+
       this.step = 4;
     },
 
     4: async function () {
-      const faltan = this.amenazas.filter((amenaza) => !this.seleccion[amenaza]);
+      const faltan = this.amenazasLista.filter((amenaza) => !this.seleccion[amenaza]);
       if (faltan.length > 0) {
         notyf.error("Faltan datos por llenar en la matriz.");
         return;
@@ -200,6 +208,15 @@
         this.otrasAmenazas.imagenAmenaza.length === 0 &&
         savedStep?.otrasAmenazas?.imagenes?.length > 0
       ) {
+        this.otrasAmenazas.imagenAmenaza_path =
+          savedStep.otrasAmenazas.imagenes[0] ?? null;
+        this.otrasAmenazas.imagenAmenaza = this.construirGaleria(
+          savedStep.otrasAmenazas.imagenes
+        );
+        this.preview = this.construirPreviewGaleria(
+          this.otrasAmenazas.imagenAmenaza
+        );
+
         this.saveStepData(4, {
           otrasAmenazas: {
             otrosElementos: this.otrasAmenazas.otrosElementos,
@@ -223,22 +240,26 @@
         this.progresoSubida = 0;
         this.mensajeSubida = "Subiendo imagenes de Posibles Amenazas...";
 
-        const subida = await this.subirArchivosTemp(
+        const rutasImagen = await media.uploadNewFiles(
+          this,
           4,
-          this.otrasAmenazas.imagenAmenaza
+          this.otrasAmenazas.imagenAmenaza,
+          savedStep?.otrasAmenazas?.imagenes || []
         );
+        const amenazaPath = rutasImagen?.[0] ?? null;
+
+        this.otrasAmenazas.imagenAmenaza_path = amenazaPath;
+        this.otrasAmenazas.imagenAmenaza = this.construirGaleria(rutasImagen);
+        this.preview = this.construirPreviewGaleria(this.otrasAmenazas.imagenAmenaza);
 
         this.saveStepData(4, {
           otrasAmenazas: {
             otrosElementos: this.otrasAmenazas.otrosElementos,
-            imagenes: subida.paths,
+            imagenes: rutasImagen,
           },
           predio: this.predio,
           seleccion: this.seleccion,
         });
-
-        this.otrasAmenazas.imagenAmenaza = [];
-        this.preview = [];
         this.step = 5;
       } catch (error) {
         notyf.error("Error al subir las imagenes");
@@ -378,15 +399,13 @@
           );
         }
 
-        this.saveStepData(6, {
-          servicios: {
-            ...this.servicios,
-            ...rutasSubidas,
-          },
-        });
+        this.servicios = {
+          ...this.servicios,
+          ...rutasSubidas,
+        };
 
-        fileFields.forEach((campo) => {
-          this.servicios[campo] = [];
+        this.saveStepData(6, {
+          servicios: this.servicios,
         });
 
         media.resetServiciosPreviewState(this);
@@ -634,12 +653,26 @@
       this.matricula = data.matricula?.map((item) => ({ ...item })) ?? [];
     },
 
+    3: function (data) {
+      this.directorObras = {
+        ...this.directorObras,
+        ...data.directorObras,
+      };
+    },
+
     4: function (data) {
-      this.seleccion = { ...data.seleccion };
+      this.seleccion = this.normalizarRespuestasCatalogo(
+        data.seleccion || {},
+        this.amenazasLista
+      );
       this.predio = { ...data.predio };
       this.otrasAmenazas.otrosElementos = data.otrasAmenazas?.otrosElementos ?? "";
-      this.preview = media.previewUrls(data.otrasAmenazas?.imagenes ?? []);
-      this.otrasAmenazas.imagenAmenaza = [];
+      this.otrasAmenazas.imagenAmenaza_path =
+        data.otrasAmenazas?.imagenes?.[0] ?? null;
+      this.otrasAmenazas.imagenAmenaza = this.construirGaleria(
+        data.otrasAmenazas?.imagenes ?? []
+      );
+      this.preview = this.construirPreviewGaleria(this.otrasAmenazas.imagenAmenaza);
     },
 
     5: function (data) {
@@ -661,9 +694,16 @@
       this.servicios = {
         ...this.servicios,
         ...data.servicios,
+        archivo_vialidad: this.construirGaleria(data.servicios?.archivo_vialidad || []),
+        fotografia_agua_potable: this.construirGaleria(data.servicios?.fotografia_agua_potable || []),
+        fotografia_drenaje: this.construirGaleria(data.servicios?.fotografia_drenaje || []),
+        fotografia_energia: this.construirGaleria(data.servicios?.fotografia_energia || []),
+        fotografia_especiales: this.construirGaleria(data.servicios?.fotografia_especiales || []),
+        fotografia_tecnologias: this.construirGaleria(data.servicios?.fotografia_tecnologias || []),
+        fotografias_accesibilidad: this.construirGaleria(data.servicios?.fotografias_accesibilidad || []),
       };
 
-      const previews = media.rehydrateServiciosPreviewState(data.servicios);
+      const previews = media.rehydrateServiciosPreviewState(this.servicios);
 
       this.vialidadImagen = previews.vialidadImagen;
       this.sistemaAguaImagen = previews.sistemaAguaImagen;
@@ -686,8 +726,30 @@
         this.edificios.indexOf(data.edificioActual),
         0
       );
-      this.respuesta_espacios = { ...data.respuesta_espacios };
-      this.respuesta_condiciones = { ...data.respuesta_condiciones };
+      const espacios = data.respuesta_espacios || {};
+      const condiciones = data.respuesta_condiciones || {};
+
+      this.respuesta_espacios = Object.fromEntries(
+        this.edificios.map((edificio) => [
+          edificio,
+          this.normalizarRespuestasCatalogo(
+            espacios[edificio] || {},
+            this.nombre_espacio,
+            this.initEdificio()
+          ),
+        ])
+      );
+
+      this.respuesta_condiciones = Object.fromEntries(
+        this.edificios.map((edificio) => [
+          edificio,
+          this.normalizarRespuestasCatalogo(
+            condiciones[edificio] || {},
+            this.nombre_condicion,
+            this.initCondiciones()
+          ),
+        ])
+      );
       this.datosExtra = media.rehydrateDatosExtraCollection(data.datosExtra || {});
     },
 
@@ -713,6 +775,10 @@
 
     12: function (data) {
       this.energiaElectrica = media.rehydrateEnergia(data.energiaElectrica || {});
+    },
+
+    13: function (data) {
+      this.actualizarFotografiasFinales(data.fotografias_paths || []);
     },
   };
 

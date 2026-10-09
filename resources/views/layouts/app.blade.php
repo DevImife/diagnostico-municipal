@@ -16,6 +16,17 @@
     <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
 
     <!-- Scripts -->
+
+    <script>
+        if (
+            localStorage.theme === 'dark' ||
+            (!('theme' in localStorage) &&
+                window.matchMedia('(prefers-color-scheme: dark)').matches)
+        ) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- ApexCharts CDN -->

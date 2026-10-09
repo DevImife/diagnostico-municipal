@@ -1,16 +1,10 @@
 <div class="p-0">
     {{-- <h1 class="text-2xl font-bold mb-4 text-vino">Listado de Planteles</h1> --}}
 
-    <!-- Input de búsqueda -->
-    <div class="grid grid-cols-1 md:grid-cols-2">
-        <!-- Columna vacía -->
-        <div></div>
-        <!-- Columna con el input -->
-        <div class="mb-2 flex justify-end">
-            <input type="text" wire:model="search" placeholder="Buscar por cct"
-                class="w-full md:w-full p-2 text-xs border rounded-lg focus:ring-vino focus:border-vino dark:bg-gray-700 dark:focus:ring-white dark:text-white">
-        </div>
-    </div>
+    <x-table-search id="ccts-search" label="Buscar C.C.T."
+        placeholder="C.C.T., plantel, municipio, turno o nivel"
+        hint="Busca también por código postal y localidad. Puedes combinar: Toluca primaria matutino."
+        :total="$ccts->total()" />
 
 
     <!-- Tabla -->
@@ -30,7 +24,7 @@
                 {{-- <pre>{{ $ccts }}</pre> --}}
 
                 @forelse($ccts  as $cct)
-                    <tr class="border-b hover:bg-cafeclaro dark:hover:bg-gray-700">
+                    <tr wire:key="cct-{{ $cct->id }}" class="border-b hover:bg-cafeclaro dark:hover:bg-gray-700">
                         <td class="px-6 py-3">{{ $cct->clave_cct }}</td>
                         <td class="px-6 py-3">{{ $cct->plantel->nombre_plantel ?? '—' }}</td>
                         <td class="px-6 py-3">{{ $cct->turno->nombre_turno ?? '—' }}</td>
@@ -55,7 +49,7 @@
                 @empty
                     <tr>
                         <td colspan="6" class="px-6 py-3 text-center text-gray-500">
-                            No se encontraron resultados.
+                            No se encontraron C.C.T. Prueba con otra búsqueda.
                         </td>
                     </tr>
                 @endforelse
