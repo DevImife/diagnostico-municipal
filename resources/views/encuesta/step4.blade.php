@@ -107,8 +107,7 @@
 
                     <!-- Input real oculto -->
                     <input type="file" id="entornoyamenazas" name="entornoyamenazas" accept="image/*" multiple
-                        class="hidden"
-                        @change="agregarImagenAmenaza($event.target.files); $event.target.value = ''" />
+                        class="hidden" @change="agregarImagenAmenaza($event.target.files); $event.target.value = ''" />
 
                     <!-- Nombre del archivo -->
                     <p x-text="nombreArchivo" class="mt-2 text-sm text-gray-500 dark:text-gray-300 truncate">
@@ -131,7 +130,7 @@
                                 <button type="button" @click="eliminarImagenAmenaza(index)"
                                     class="absolute top-2 right-2 bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition"
                                     title="Eliminar imagen">
-                                    âœ•
+                                    ✕
                                 </button>
                             </div>
                         </template>
@@ -274,4 +273,3 @@
     </div>
 
 </div>
-

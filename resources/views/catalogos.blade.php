@@ -53,56 +53,8 @@
                     <!-- Copia y cambia para más tarjetas -->
                     <div
                         class="bg-white dark:bg-gray-950 rounded-2xl shadow-md p-6 border border-transparent dark:border-gray-600">
-                        <div class="flex justify-between items-center mb-4">
-                            <h2 class="text-xl font-semibold text-vino dark:text-white">Visualizar Municipios</h2>
-
-                            <!-- Campo de búsqueda con icono -->
-                            <form method="GET" action="{{ route('catalogos') }}" class="relative" autocomplete="off">
-                                <input type="text" name="search" placeholder="Buscar municipio..."
-                                    value="{{ request('search') }}"
-                                    class="bg-gray-100 dark:bg-gray-700 text-sm border border-gray-300 rounded-lg pl-8 pr-3 py-1  focus:border-red-600 focus:ring-0 dark:focus:border-white dark:focus:ring-1 dark:focus:text-white dark:text-white">
-                                {{-- <span class="absolute left-2 top-1.5 text-gray-400">🔍</span> --}}
-                            </form>
-                        </div>
-
-                        <!-- Cards -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
-                            @forelse ($municipios as $municipio)
-                                <div
-                                    class="bg-white dark:bg-gray-700 rounded-lg shadow p-2 hover:bg-gray-100 dark:hover:bg-gray-900 transition flex flex-col justify-between">
-                                    <div class="">
-                                        <h2
-                                            class="mb-1 text-sm md:text-lg font-semibold text-cafe dark:text-grisclaro break-words">
-                                            {{ $municipio->nombre_municipio }}
-                                        </h2>
-                                    </div>
-                                    <div class="mt-1 flex justify-end space-x-2">
-                                        <a href="{{ route('catalogos.edit', $municipio->id) }}"
-                                            class="text-blue-500 hover:text-cafe transition" title="Editar">✏️
-                                        </a>
-                                        <form id="form-delete-municipio-{{ $municipio->id }}"
-                                            action="{{ route('catalogos.destroy', $municipio->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="button"
-                                                onclick="confirmDelete('municipio', {{ $municipio->id }})"
-                                                class="text-red-500 hover:text-red-700 transition"
-                                                title="Eliminar">🗑️</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            @empty
-                                <div class="col-span-full text-gray-500 text-center py-4">
-                                    No se encontraron municipios.
-                                </div>
-                            @endforelse
-                        </div>
-
-                        <!-- Paginación -->
-                        <div class="mt-6">
-                            {{-- {{ $municipios->appends(request()->query())->links() }} --}}
-                            {{ $municipios->appends(request()->except('municipios_page'))->links() }}
-                        </div>
+                        <h2 class="text-xl font-semibold text-vino dark:text-white mb-4">Visualizar Municipios</h2>
+                        <livewire:municipios-table />
                     </div>
 
                 </div>
@@ -264,63 +216,8 @@
 
                     <div
                         class="bg-white dark:bg-gray-950 rounded-2xl shadow-md p-6 border border-transparent dark:border-gray-600">
-                        <div class="flex justify-between items-center mb-4">
-                            <h2 class="text-xl font-semibold text-vino dark:text-white">Visualizar Códigos Postales
-                            </h2>
-                            <!-- Campo de búsqueda con icono -->
-                            <form method="GET" action="{{ route('catalogos') }}" class="relative"
-                                autocomplete="off">
-                                <input type="text" name="search_codigos" placeholder="Buscar códigos..."
-                                    value="{{ request('search_codigos') }}"
-                                    class="bg-gray-100 dark:bg-gray-700 text-sm border border-gray-300 rounded-lg pl-8 pr-3 py-1  focus:border-red-600 focus:ring-0 dark:focus:border-white dark:focus:ring-1 dark:focus:text-white dark:text-white">
-                                {{-- <span class="absolute left-2 top-1.5 text-gray-400">🔍</span> --}}
-                            </form>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
-                            {{-- <pre>{{ print_r($codigoEdit, true) }}</pre> --}}
-                            @forelse ($codigos ?? collect() as $codigo)
-                                <div
-                                    class="bg-white dark:bg-gray-700 rounded-lg shadow p-2 hover:bg-gray-100 dark:hover:bg-gray-900 transition flex flex-col justify-between">
-                                    <div class="">
-                                        <h2
-                                            class="mb-2 text-sm md:text-lg font-semibold text-cafe dark:text-grisclaro break-words">
-                                            {{ $codigo->codigo_postal }}
-                                        </h2>
-                                        <p class="text-vino font-medium text-sm">
-                                            {{ $codigo->municipio->nombre_municipio }}</p>
-                                        <p class="text-gray-700 dark:text-gray-300 truncate text-xs"
-                                            title="{{ $codigo->localidad }}">
-                                            {{ $codigo->localidad }}
-                                        </p>
-                                        <p class="text-gray-600 dark:text-gray-400 text-xs">{{ $codigo->tipo }}</p>
-                                        <p class="text-gray-500 dark:text-gray-400 text-xs">{{ $codigo->zona }}</p>
-                                    </div>
-                                    <div class="mt-1 flex justify-end space-x-2">
-                                        <a href="{{ route('codigos.edit', $codigo->id) }}"
-                                            class="text-blue-500 hover:text-cafe transition" title="Editar">✏️
-                                        </a>
-                                        <form id="form-delete-codigo-{{ $codigo->id }}"
-                                            action="{{ route('codigos.destroy', $codigo->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="button"
-                                                onclick="confirmDelete('codigo', {{ $codigo->id }})"
-                                                class="text-red-500 hover:text-red-700 transition"
-                                                title="Eliminar">🗑️</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            @empty
-                                <div class="col-span-full text-gray-500 text-center py-4">
-                                    No se encontraron Códigos.
-                                </div>
-                            @endforelse
-                        </div>
-                        <div class="mt-6">
-                            {{-- {{ $codigos->appends(request()->query())->links() }} --}}
-                            {{ $codigos->appends(request()->except('codigos_page'))->links() }}
-                        </div>
+                        <h2 class="text-xl font-semibold text-vino dark:text-white mb-4">Visualizar Códigos Postales</h2>
+                        <livewire:codigos-table />
                     </div>
                 </div>
             </div>
