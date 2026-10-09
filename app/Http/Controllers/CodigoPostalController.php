@@ -13,22 +13,13 @@ class CodigoPostalController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        //
-        $search = $request->input('search_codigos');
-
-        $codigos = Postcode::when($search, function ($query, $search) {
-            return $query->where('codigo_postal', 'like', "%{$search}%");
-        })->paginate(8);
-
-        $municipios = Municipality::paginate(8);
-
         $municipiosAll = Municipality::select('id', 'nombre_municipio')
             ->orderBy('id')
             ->get();
 
-        return view('catalogos', compact('codigos', 'municipios', 'municipiosAll'));
+        return view('catalogos', compact('municipiosAll'));
     }
 
     /**
@@ -99,14 +90,12 @@ class CodigoPostalController extends Controller
     {
         //
         $codigoEdit = Postcode::findOrFail($id);
-        $codigos = Postcode::paginate(8); // Para mostrar todos también
-        $municipios = Municipality::paginate(8);
 
         $municipiosAll = Municipality::select('id', 'nombre_municipio')
             ->orderBy('id')
             ->get();
 
-        return view('catalogos', compact('codigos', 'codigoEdit', 'municipios', 'municipiosAll'));
+        return view('catalogos', compact('codigoEdit', 'municipiosAll'));
     }
 
     /**

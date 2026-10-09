@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Audit;
 use App\Models\Municipality;
-use App\Models\Postcode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,22 +12,13 @@ class MunicipiosController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $search = $request->input('search');
-
-        $municipios = Municipality::when($search, function ($query, $search) {
-            return $query->where('nombre_municipio', 'like', "%{$search}%");
-        })->paginate(12, ['*'], 'municipios_page');
-
-        // $codigos = Postcode::paginate(8);
-        $codigos = Postcode::with('municipio')->paginate(12, ['*'], 'codigos_page');
-
         $municipiosAll = Municipality::select('id', 'nombre_municipio')
             ->orderBy('id')
             ->get();
 
-        return view('catalogos', compact('municipios', 'codigos', 'municipiosAll'));
+        return view('catalogos', compact('municipiosAll'));
     }
 
     /**
@@ -90,14 +80,12 @@ class MunicipiosController extends Controller
     {
         //
         $municipioEdit = Municipality::findOrFail($id);
-        $codigos = Postcode::with('municipio')->paginate(8, ['*'], 'codigos_page');
-        $municipios = Municipality::paginate(8); // Para mostrar todos también
 
         $municipiosAll = Municipality::select('id', 'nombre_municipio')
             ->orderBy('id')
             ->get();
 
-        return view('catalogos', compact('municipios', 'municipioEdit', 'codigos', 'municipiosAll'));
+        return view('catalogos', compact('municipioEdit', 'municipiosAll'));
 
     }
 

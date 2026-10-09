@@ -3,16 +3,10 @@
     <div class="p-0">
         {{-- <h1 class="text-2xl font-bold mb-4 text-vino">Listado de Planteles</h1> --}}
 
-        <!-- Input de búsqueda -->
-        <div class="grid grid-cols-1 md:grid-cols-2">
-            <!-- Columna vacía -->
-            <div></div>
-            <!-- Columna con el input -->
-            <div class="mb-2 flex justify-end">
-                <input type="text" wire:model="search" placeholder="Buscar por plantel"
-                    class="w-full md:w-full p-2 text-xs border rounded-lg focus:ring-vino focus:border-vino dark:bg-gray-700 dark:focus:ring-white dark:text-white">
-            </div>
-        </div>
+        <x-table-search id="planteles-search" label="Buscar planteles"
+            placeholder="Plantel, municipio, código postal o C.C.T."
+            hint="Busca también por localidad. Puedes combinar palabras: Juárez Toluca."
+            :total="$planteles->total()" />
 
 
         <!-- Tabla -->
@@ -29,7 +23,7 @@
                 </thead>
                 <tbody class="dark:bg-gray-600">
                     @forelse($planteles as $plantel)
-                        <tr class="border-b hover:bg-cafeclaro dark:hover:bg-gray-700">
+                        <tr wire:key="plantel-{{ $plantel->id }}" class="border-b hover:bg-cafeclaro dark:hover:bg-gray-700">
                             <td class="px-6 py-3 text-xs">{{ $plantel->nombre_plantel }}</td>
                             <td class="px-6 py-3 text-xs">{{ $plantel->codigo_postal->municipio->nombre_municipio }}
                             </td>
@@ -54,7 +48,7 @@
                     @empty
                         <tr>
                             <td colspan="5" class="px-6 py-3 text-center text-gray-500">
-                                No se encontraron resultados.
+                                No se encontraron planteles. Prueba con otra búsqueda.
                             </td>
                         </tr>
                     @endforelse

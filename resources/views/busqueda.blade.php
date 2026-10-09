@@ -1,6 +1,4 @@
 <x-app-layout>
-
-
     <div x-data="buscador()" @click.away="mostrarResultados = false">
         <div
             class="flex flex-col sm:flex-row sm:items-center sm:justify-between bg-white divide-solid h-[5rem] dark:bg-gray-950">
@@ -662,8 +660,7 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                                 <div class="rounded-xl bg-gray-50 dark:bg-gray-800 p-4">
                                     <h3 class="font-semibold text-gray-800 dark:text-white mb-3">Datos del predio</h3>
-                                    <template
-                                        x-for="[key, value] in obtenerCamposConValor(datosPlantel.medidas || {})"
+                                    <template x-for="[key, value] in obtenerCamposConValor(datosPlantel.medidas || {})"
                                         :key="key">
                                         <div
                                             class="flex justify-between gap-4 border-b border-gray-200 dark:border-gray-700 py-2">
@@ -698,10 +695,13 @@
                                     x-text="valorLegible(datosPlantel.otrosElementos?.otrosElementos)"></p>
                             </div>
 
-                            <div class="mt-4" x-show="normalizarLista(datosPlantel.otrosElementos?.imagenAmenaza).length > 0">
-                                <h3 class="font-semibold text-gray-800 dark:text-white mb-3">Fotografías de amenazas</h3>
+                            <div class="mt-4"
+                                x-show="normalizarLista(datosPlantel.otrosElementos?.imagenAmenaza).length > 0">
+                                <h3 class="font-semibold text-gray-800 dark:text-white mb-3">Fotografías de amenazas
+                                </h3>
                                 <div class="flex gap-3 overflow-x-auto">
-                                    <template x-for="img in normalizarLista(datosPlantel.otrosElementos?.imagenAmenaza)"
+                                    <template
+                                        x-for="img in normalizarLista(datosPlantel.otrosElementos?.imagenAmenaza)"
                                         :key="img">
                                         <img :src="resolverRutaArchivo(img, 'amenazas')"
                                             class="h-28 w-28 object-cover rounded-xl border border-gray-300 dark:border-gray-600 shadow-sm"
@@ -738,7 +738,8 @@
                                 <h3 class="font-semibold text-gray-800 dark:text-white mb-3">Reporte fotográfico final
                                 </h3>
                                 <div class="grid grid-cols-2 gap-3">
-                                    <template x-for="img in normalizarLista(datosPlantel.fotografias)" :key="img">
+                                    <template x-for="img in normalizarLista(datosPlantel.fotografias)"
+                                        :key="img">
                                         <img :src="resolverRutaArchivo(img, 'fotografias')"
                                             class="h-24 w-full object-cover rounded-xl border border-gray-300 dark:border-gray-600"
                                             alt="Fotografía final del plantel" />
@@ -767,7 +768,8 @@
                                 x-show="obtenerCamposConValor(datosPlantel.tipoDescarga || {}).length > 0">
                                 <h3 class="font-semibold text-gray-800 dark:text-white mb-2">Tipo de descarga
                                     sanitaria</h3>
-                                <template x-for="[key, value] in obtenerCamposConValor(datosPlantel.tipoDescarga || {})"
+                                <template
+                                    x-for="[key, value] in obtenerCamposConValor(datosPlantel.tipoDescarga || {})"
                                     :key="key">
                                     <div
                                         class="flex justify-between gap-4 border-b border-gray-200 dark:border-gray-700 py-2 text-sm">
@@ -837,7 +839,8 @@
                             class="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
                             <h2 class="text-2xl font-bold text-vino dark:text-white mb-4">Complemento de edificios</h2>
                             <div class="space-y-4" x-show="datosPlantel?.edifTipoEstructura">
-                                <template x-for="(edificio, clave) in datosPlantel.edifTipoEstructura" :key="'extra-' + clave">
+                                <template x-for="(edificio, clave) in datosPlantel.edifTipoEstructura"
+                                    :key="'extra-' + clave">
                                     <div class="rounded-xl bg-gray-50 dark:bg-gray-800 p-4">
                                         <h3 class="font-semibold text-gray-800 dark:text-white mb-3"
                                             x-text="'Edificio ' + clave"></h3>
@@ -866,7 +869,8 @@
                                             <p class="font-medium text-gray-600 dark:text-gray-400 mb-2">Fotografías de
                                                 daño</p>
                                             <div class="flex gap-3 overflow-x-auto">
-                                                <template x-for="img in normalizarLista(edificio.imagen_danio)" :key="img">
+                                                <template x-for="img in normalizarLista(edificio.imagen_danio)"
+                                                    :key="img">
                                                     <img :src="resolverRutaArchivo(img, 'edificios_danio')"
                                                         class="h-24 w-24 object-cover rounded-xl border border-gray-300 dark:border-gray-600"
                                                         alt="Fotografía de daño del edificio" />
@@ -883,7 +887,8 @@
                             <h2 class="text-2xl font-bold text-vino dark:text-white mb-4">Obra exterior</h2>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                                <template x-for="[key, value] in obtenerCamposConValor(datosPlantel.obraExteriorEstado || {})"
+                                <template
+                                    x-for="[key, value] in obtenerCamposConValor(datosPlantel.obraExteriorEstado || {})"
                                     :key="key">
                                     <div class="rounded-xl bg-gray-50 dark:bg-gray-800 p-3">
                                         <p class="font-medium text-gray-600 dark:text-gray-400"
@@ -1770,7 +1775,8 @@
                         return [{
                                 titulo: 'Fotografías de obra exterior',
                                 folder: 'obra_exterior',
-                                items: this.normalizarLista(obraExterior.fotografiaUsoMultiples || obraExterior.fotografiaUsoMultiples_paths),
+                                items: this.normalizarLista(obraExterior.fotografiaUsoMultiples || obraExterior
+                                    .fotografiaUsoMultiples_paths),
                             },
                             {
                                 titulo: 'Croquis',
